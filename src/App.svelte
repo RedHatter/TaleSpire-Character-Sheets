@@ -1,6 +1,5 @@
 <script lang="ts">
   import DnD5eSheet from './DnD5e/Sheet.svelte'
-
 </script>
 
 <main class="flex flex-col my-4 mx-auto container">
@@ -32,5 +31,4 @@
     -webkit-appearance: none;
     -moz-appearance: none;
   }
-
 </style>

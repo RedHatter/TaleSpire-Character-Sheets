@@ -44,7 +44,7 @@ export default function (options) {
       transform(source, filepath) {
         let formatted = formatContents(filepath, source)
         if (filepath.endsWith('.svelte') || filepath.endsWith('.html') || filepath.endsWith('.css'))
-          formatted = formatCss(filepath, formatted, zen, zenTailwind)
+           formatted = formatCss(filepath, formatted, zen, zenTailwind)
 
         return formatted
       },

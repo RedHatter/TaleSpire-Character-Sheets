@@ -1,3 +1,6 @@
+import { debounce } from '../utils'
+import { writable, Writable, Subscriber } from 'svelte/store'
+
 export enum DiceType {
   D4,
   D6,
@@ -7,15 +10,11 @@ export enum DiceType {
 }
 
 export class Feature {
-  name: String
-  origin: String
-  description: String
+  constructor(public name: string = '', public source: string = '', public description: string = '') {}
 }
 
 export class Tracker {
-  name: String
-  max: number
-  current: number
+  constructor(public name: string = '', public max: number = 0, public current: number = 0) {}
 }
 
 export class DnD5eData {
@@ -92,6 +91,12 @@ export class DnD5eData {
   bonds: string = ''
   flaws: string = ''
 
+  trackers: Array<Tracker> = [new Tracker('Class Resource'), new Tracker('Other Resource')]
   trackers: Array<Tracker> = []
   features: Array<Feature> = []
 }
+
+export const data = writable((JSON.parse(window.localStorage.getItem('data')) ?? new DnD5eData()) as DnD5eData)
+data.subscribe(
+  debounce(data => window.localStorage.setItem('$data', JSON.stringify(data)), 1000) as Subscriber<DnD5eData>
+)

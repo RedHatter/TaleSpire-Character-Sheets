@@ -2,7 +2,6 @@
   import { modifier } from '../utils'
   export let name
   export let value
-
 </script>
 
 <label class="flex items-center flex-col mb-6 pt-2 border">
