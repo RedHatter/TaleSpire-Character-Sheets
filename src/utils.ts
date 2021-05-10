@@ -3,8 +3,8 @@ export function range(from: number = 0, to: number): Array<number> {
     to = from
     from = 0
   }
-  
-  return Array.from({length: to - from}, (_, i) => i + from);
+
+  return Array.from({ length: to - from }, (_, i) => i + from)
 }
 
 export function modifier(n: number) {

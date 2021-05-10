@@ -1,8 +1,9 @@
 <script lang="ts">
   import DnD5eSheet from './DnD5e/Sheet.svelte'
+
 </script>
 
-<main class="container mx-auto flex flex-col my-4">
+<main class="flex flex-col my-4 mx-auto container">
   <DnD5eSheet />
 </main>
 
@@ -17,8 +18,8 @@
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    -webkit-appearance: none;
   }
 
   input[type='number'] {
@@ -26,9 +27,10 @@
   }
 
   select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     background: none;
     cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
+
 </style>

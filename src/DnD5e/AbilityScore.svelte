@@ -2,10 +2,11 @@
   import { modifier } from '../utils'
   export let name
   export let value
+
 </script>
 
-<label class="flex flex-col items-center border mb-6 pt-2">
+<label class="flex items-center flex-col mb-6 pt-2 border">
   <span>{name}</span>
   <span class="text-5xl">{modifier(value)}</span>
-  <input type="number" bind:value class="w-12 text-2xl text-center border relative -bottom-2" />
+  <input type="number" bind:value class="-bottom-2 relative w-12 border text-center text-2xl" />
 </label>

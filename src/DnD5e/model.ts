@@ -1,5 +1,9 @@
 export enum DiceType {
-  D4, D6, D8, D10, D12
+  D4,
+  D6,
+  D8,
+  D10,
+  D12,
 }
 
 export class Feature {
@@ -15,12 +19,12 @@ export class Tracker {
 }
 
 export class DnD5eData {
-  name: string = ""
-  playerClass: string = ""
+  name: string = ''
+  playerClass: string = ''
   level: number = 1
-  background: string = ""
-  race: string = ""
-  alignment: string = ""
+  background: string = ''
+  race: string = ''
+  alignment: string = ''
   exp: number = 0
 
   strength: number = 10
@@ -30,7 +34,7 @@ export class DnD5eData {
   wisdom: number = 10
   charisma: number = 10
 
-  inspiration: boolean = false 
+  inspiration: boolean = false
   proficiency: number = 2
 
   savingThrows = {
@@ -44,7 +48,7 @@ export class DnD5eData {
 
   skills = {
     acrobatics: false,
-    animalHandling:false,
+    animalHandling: false,
     arcana: false,
     athletics: false,
     deception: false,
@@ -66,7 +70,6 @@ export class DnD5eData {
   armorClass: number = 10
   speed: number = 30
 
-  
   hp = {
     max: 10,
     current: 10,

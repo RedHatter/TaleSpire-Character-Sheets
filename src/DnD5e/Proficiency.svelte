@@ -4,6 +4,7 @@
   export let abilityScore: number
   export let bonus: number
   export let value: boolean
+
 </script>
 
 <label class="flex">
