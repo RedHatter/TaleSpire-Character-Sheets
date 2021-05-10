@@ -1,5 +1,5 @@
-import { debounce } from '../utils'
-import { writable, Writable, Subscriber } from 'svelte/store'
+import { debounce, mapObject } from '../utils'
+import { writable, Subscriber, derived as derivedStore } from 'svelte/store'
 
 export enum DiceType {
   D4,
@@ -7,6 +7,16 @@ export enum DiceType {
   D8,
   D10,
   D12,
+}
+
+export enum AbilityType {
+  STR,
+  DEX,
+  CON,
+  INT,
+  WIS,
+  CHA,
+  SPELL,
 }
 
 export class Feature {
@@ -26,23 +36,25 @@ export class DnD5eData {
   alignment: string = ''
   exp: number = 0
 
-  strength: number = 10
-  dexterity: number = 10
-  constitution: number = 10
-  intelligence: number = 10
-  wisdom: number = 10
-  charisma: number = 10
+  abilityScores = {
+    [AbilityType.STR]: 10,
+    [AbilityType.DEX]: 10,
+    [AbilityType.CON]: 10,
+    [AbilityType.INT]: 10,
+    [AbilityType.WIS]: 10,
+    [AbilityType.CHA]: 10,
+  }
 
   inspiration: boolean = false
   proficiency: number = 2
 
   savingThrows = {
-    strength: false,
-    dexterity: false,
-    constitution: false,
-    intelligence: false,
-    wisdom: false,
-    charisma: false,
+    [AbilityType.STR]: false,
+    [AbilityType.DEX]: false,
+    [AbilityType.CON]: false,
+    [AbilityType.INT]: false,
+    [AbilityType.WIS]: false,
+    [AbilityType.CHA]: false,
   }
 
   skills = {
@@ -100,3 +112,103 @@ export const data = writable((JSON.parse(window.localStorage.getItem('data')) ??
 data.subscribe(
   debounce(data => window.localStorage.setItem('$data', JSON.stringify(data)), 1000) as Subscriber<DnD5eData>
 )
+
+const abilityNames = {
+  [AbilityType.STR]: 'Strength',
+  [AbilityType.DEX]: 'Dexterity',
+  [AbilityType.CON]: 'Constitution',
+  [AbilityType.INT]: 'Intelligence',
+  [AbilityType.WIS]: 'Wisdom',
+  [AbilityType.CHA]: 'Charisma',
+}
+
+export const derived = derivedStore(data, data => {
+  const abilityScores = mapObject(data.abilityScores, (base: number, type: AbilityType) => ({
+    modifier: Math.floor((base - 10) / 2),
+    name: abilityNames[type],
+  }))
+
+  return {
+    abilityScores,
+
+    savingThrows: mapObject(data.savingThrows, (proficient: boolean, type: AbilityType) => ({
+      modifier: abilityScores[type].modifier + (proficient ? data.proficiency : 0),
+      name: abilityNames[type],
+    })),
+
+    skills: {
+      acrobatics: {
+        name: 'Acrobatics (Dex)',
+        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.acrobatics ? data.proficiency : 0),
+      },
+      animalHandling: {
+        name: 'Animal Handling (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.animalHandling ? data.proficiency : 0),
+      },
+      arcana: {
+        name: 'Arcana (Int)',
+        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.arcana ? data.proficiency : 0),
+      },
+      athletics: {
+        name: 'Athletics (Str)',
+        modifier: abilityScores[AbilityType.STR].modifier + (data.skills.athletics ? data.proficiency : 0),
+      },
+      deception: {
+        name: 'Deception (Cha)',
+        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.deception ? data.proficiency : 0),
+      },
+      history: {
+        name: 'History (Int)',
+        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.history ? data.proficiency : 0),
+      },
+      insight: {
+        name: 'Insight (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.insight ? data.proficiency : 0),
+      },
+      intimidation: {
+        name: 'Medicine (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.intimidation ? data.proficiency : 0),
+      },
+      investigation: {
+        name: 'Investigation (Int)',
+        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.investigation ? data.proficiency : 0),
+      },
+      medicine: {
+        name: 'Medicine (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.medicine ? data.proficiency : 0),
+      },
+      nature: {
+        name: 'Nature (Int)',
+        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.nature ? data.proficiency : 0),
+      },
+      perception: {
+        name: 'Perception (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.perception ? data.proficiency : 0),
+      },
+      performance: {
+        name: 'Performance (Cha)',
+        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.performance ? data.proficiency : 0),
+      },
+      persuasion: {
+        name: 'Persuasion (Cha)',
+        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.persuasion ? data.proficiency : 0),
+      },
+      religion: {
+        name: 'Religion (Int)',
+        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.religion ? data.proficiency : 0),
+      },
+      sleightOfHand: {
+        name: 'Sleight of Hand (Dex)',
+        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.sleightOfHand ? data.proficiency : 0),
+      },
+      stealth: {
+        name: 'Stealth (Dex)',
+        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.stealth ? data.proficiency : 0),
+      },
+      survival: {
+        name: 'Survival (Wis)',
+        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.survival ? data.proficiency : 0),
+      },
+    },
+  }
+})
