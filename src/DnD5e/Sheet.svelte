@@ -1,10 +1,11 @@
 <script>
   import { range } from '../utils'
-  import { AbilityType, data, derived, DiceType } from './model'
+  import { AbilityType, CustomSkill, data, derived, DiceType } from './model'
   import Attacks from './Attacks.svelte'
   import Trackers from './Trackers.svelte'
   import Features from './Features.svelte'
   import Equipment from './Equipment.svelte'
+  import Tools from './Tools.svelte'
   import OtherProficiencies from './OtherProficiencies.svelte'
   import Skills from './Skills.svelte'
 
@@ -93,6 +94,7 @@
       <span class="flex-grow text-center">passive wisdom (perception)</span>
     </span>
 
+    <Tools />
     <OtherProficiencies />
   </div>
   <div class="px-1.5 flex-1">

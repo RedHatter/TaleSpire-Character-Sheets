@@ -6,11 +6,12 @@
 
   export let items: Array<Option>
   export let label: string
-
   export let value: any
+  let clazz
+  export { clazz as class }
 </script>
 
-<label class="relative block pt-2 border-b border-gray-200">
+<label class="{clazz} relative block pt-2 border-b border-gray-200">
   <div class="ml-2 text-gray-600 text-xs pointer-events-none">{label}</div>
   <select class="pr-8 pb-2 pl-1 w-full" bind:value>
     {#each items as { value, text }}

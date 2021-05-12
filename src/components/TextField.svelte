@@ -30,15 +30,18 @@
     transform: scale(1) translateY(0);
   }
 
+  textarea::placeholder,
   input::placeholder {
     opacity: 0;
     transition: opacity 250ms;
   }
 
+  textarea:focus::placeholder,
   input:focus::placeholder {
     opacity: 1;
   }
 
+  textarea:focus ~ span,
   input:focus ~ span,
   span.hasValue {
     transform: scale(0.75) translateY(-0.5rem);
@@ -50,6 +53,7 @@
     transform: scaleX(0);
   }
 
+  textarea:focus ~ div,
   input:focus ~ div {
     transform: scaleX(1);
   }

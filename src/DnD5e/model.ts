@@ -56,6 +56,16 @@ export class Item {
   ) {}
 }
 
+export class CustomSkill {
+  constructor(
+    public name: string = '',
+    public proficient: SkillProficiencyType = SkillProficiencyType.Proficient,
+    public ability: AbilityType = AbilityType.STR,
+    public modifier: number = 0,
+    public description: string = ''
+  ) {}
+}
+
 export enum OtherProficiencyType {
   Language,
   Weapon,
@@ -96,6 +106,8 @@ export class DnD5eData {
     [AbilityType.WIS]: 10,
     [AbilityType.CHA]: 10,
   }
+
+  tools: Array<CustomSkill> = []
 
   proficiencies: Array<OtherProficiency> = []
 
@@ -220,6 +232,11 @@ export const derived = derivedStore(data, data => {
     savingThrows: mapObject(data.savingThrows, (proficient: boolean, type: AbilityType) => ({
       modifier: abilityScores[type].modifier + (proficient ? data.proficiency : 0),
       name: abilityNames[type],
+    })),
+
+    tools: data.tools.map(tool => ({
+      ability: abilityNames[tool.ability],
+      modifier: getSkillModifier(tool.ability, tool.proficient),
     })),
 
     skills: {
