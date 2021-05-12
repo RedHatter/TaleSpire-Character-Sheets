@@ -145,15 +145,27 @@
       <div class="ml-1.5 flex overflow-hidden flex-1 flex-col justify-around py-2 px-4 border">
         <span class="flex" on:click={e => ($data.deathSaves.success = ($data.deathSaves.success + 1) % 4)}>
           <span class="w-1/2">Success</span>
-          <input class="mr-1 pointer-events-none" type="checkbox" checked={$data.deathSaves.success >= 1} />
-          <input class="mr-1 pointer-events-none" type="checkbox" checked={$data.deathSaves.success >= 2} />
-          <input class="pointer-events-none" type="checkbox" checked={$data.deathSaves.success >= 3} />
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.success >= 1 ? 'check_box' : 'check_box_outline_blank'}
+          </span>
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.success >= 2 ? 'check_box' : 'check_box_outline_blank'}
+          </span>
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.success >= 3 ? 'check_box' : 'check_box_outline_blank'}
+          </span>
         </span>
         <span class="flex" on:click={e => ($data.deathSaves.failure = ($data.deathSaves.failure + 1) % 4)}>
           <span class="w-1/2">Failure</span>
-          <input class="mr-1 pointer-events-none" type="checkbox" checked={$data.deathSaves.failure >= 1} />
-          <input class="mr-1 pointer-events-none" type="checkbox" checked={$data.deathSaves.failure >= 2} />
-          <input class="pointer-events-none" type="checkbox" checked={$data.deathSaves.failure >= 3} />
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.failure >= 1 ? 'disabled_by_default' : 'check_box_outline_blank'}
+          </span>
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.failure >= 2 ? 'disabled_by_default' : 'check_box_outline_blank'}
+          </span>
+          <span class="material-icons pointer-events-none">
+            {$data.deathSaves.failure >= 3 ? 'disabled_by_default' : 'check_box_outline_blank'}
+          </span>
         </span>
         <span class="text-center">Death Saves</span>
       </div>
