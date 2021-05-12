@@ -18,6 +18,13 @@ export enum AbilityType {
   CHA,
 }
 
+export enum SkillProficiencyType {
+  None,
+  Proficient,
+  Expertise,
+  JackOfAllTrades,
+}
+
 export class Attack {
   constructor(
     public name: string = '',
@@ -49,16 +56,16 @@ export class Item {
   ) {}
 }
 
-export enum ProficiencyType {
+export enum OtherProficiencyType {
   Language,
   Weapon,
   Armor,
   Other,
 }
 
-export class Proficiency {
+export class OtherProficiency {
   constructor(
-    public type: ProficiencyType = ProficiencyType.Language,
+    public type: OtherProficiencyType = OtherProficiencyType.Language,
     public name: string = '',
     public source: string = ''
   ) {}
@@ -90,7 +97,7 @@ export class DnD5eData {
     [AbilityType.CHA]: 10,
   }
 
-  proficiencies: Array<Proficiency> = []
+  proficiencies: Array<OtherProficiency> = []
 
   inspiration: boolean = false
   proficiency: number = 2
@@ -105,24 +112,24 @@ export class DnD5eData {
   }
 
   skills = {
-    acrobatics: false,
-    animalHandling: false,
-    arcana: false,
-    athletics: false,
-    deception: false,
-    history: false,
-    insight: false,
-    intimidation: false,
-    investigation: false,
-    medicine: false,
-    nature: false,
-    perception: false,
-    performance: false,
-    persuasion: false,
-    religion: false,
-    sleightOfHand: false,
-    stealth: false,
-    survival: false,
+    acrobatics: SkillProficiencyType.None,
+    animalHandling: SkillProficiencyType.None,
+    arcana: SkillProficiencyType.None,
+    athletics: SkillProficiencyType.None,
+    deception: SkillProficiencyType.None,
+    history: SkillProficiencyType.None,
+    insight: SkillProficiencyType.None,
+    intimidation: SkillProficiencyType.None,
+    investigation: SkillProficiencyType.None,
+    medicine: SkillProficiencyType.None,
+    nature: SkillProficiencyType.None,
+    perception: SkillProficiencyType.None,
+    performance: SkillProficiencyType.None,
+    persuasion: SkillProficiencyType.None,
+    religion: SkillProficiencyType.None,
+    sleightOfHand: SkillProficiencyType.None,
+    stealth: SkillProficiencyType.None,
+    survival: SkillProficiencyType.None,
   }
 
   armorClass: number = 10
@@ -180,6 +187,19 @@ export const derived = derivedStore(data, data => {
     name: abilityNames[type],
   }))
 
+  function getSkillModifier(ability: AbilityType, type: SkillProficiencyType) {
+    return (
+      abilityScores[ability].modifier +
+      (type == SkillProficiencyType.Proficient
+        ? data.proficiency
+        : type == SkillProficiencyType.Expertise
+        ? data.proficiency * 2
+        : type == SkillProficiencyType.JackOfAllTrades
+        ? Math.floor(data.proficiency / 2)
+        : 0)
+    )
+  }
+
   let copper = data.coin
 
   let platinum = Math.floor(copper / 1000)
@@ -205,75 +225,75 @@ export const derived = derivedStore(data, data => {
     skills: {
       acrobatics: {
         name: 'Acrobatics (Dex)',
-        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.acrobatics ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.DEX, data.skills.acrobatics),
       },
       animalHandling: {
         name: 'Animal Handling (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.animalHandling ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.animalHandling),
       },
       arcana: {
         name: 'Arcana (Int)',
-        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.arcana ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.INT, data.skills.arcana),
       },
       athletics: {
         name: 'Athletics (Str)',
-        modifier: abilityScores[AbilityType.STR].modifier + (data.skills.athletics ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.STR, data.skills.athletics),
       },
       deception: {
         name: 'Deception (Cha)',
-        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.deception ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.CHA, data.skills.deception),
       },
       history: {
         name: 'History (Int)',
-        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.history ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.INT, data.skills.history),
       },
       insight: {
         name: 'Insight (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.insight ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.insight),
       },
       intimidation: {
         name: 'Medicine (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.intimidation ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.intimidation),
       },
       investigation: {
         name: 'Investigation (Int)',
-        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.investigation ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.INT, data.skills.investigation),
       },
       medicine: {
         name: 'Medicine (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.medicine ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.medicine),
       },
       nature: {
         name: 'Nature (Int)',
-        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.nature ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.INT, data.skills.nature),
       },
       perception: {
         name: 'Perception (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.perception ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.perception),
       },
       performance: {
         name: 'Performance (Cha)',
-        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.performance ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.CHA, data.skills.performance),
       },
       persuasion: {
         name: 'Persuasion (Cha)',
-        modifier: abilityScores[AbilityType.CHA].modifier + (data.skills.persuasion ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.CHA, data.skills.persuasion),
       },
       religion: {
         name: 'Religion (Int)',
-        modifier: abilityScores[AbilityType.INT].modifier + (data.skills.religion ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.INT, data.skills.religion),
       },
       sleightOfHand: {
         name: 'Sleight of Hand (Dex)',
-        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.sleightOfHand ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.DEX, data.skills.sleightOfHand),
       },
       stealth: {
         name: 'Stealth (Dex)',
-        modifier: abilityScores[AbilityType.DEX].modifier + (data.skills.stealth ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.DEX, data.skills.stealth),
       },
       survival: {
         name: 'Survival (Wis)',
-        modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.survival ? data.proficiency : 0),
+        modifier: getSkillModifier(AbilityType.WIS, data.skills.survival),
       },
     },
 

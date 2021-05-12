@@ -8,7 +8,7 @@
 <div
   in:fade={{ duration: 200, easing: quadIn }}
   out:fade={{ duration: 200, easing: quadOut }}
-  class="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black"
+  class="bg-opacity-50 fixed inset-0 z-50 flex overflow-auto items-center justify-center bg-black"
   on:click={() => dispatch('close')}
 >
   <div

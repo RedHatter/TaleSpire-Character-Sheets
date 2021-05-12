@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { data, Proficiency, ProficiencyType } from './model'
+  import { data, OtherProficiency, OtherProficiencyType } from './model'
   import { enumToSelect } from '../utils'
   import Dialog from '../components/Dialog.svelte'
   import Select from '../components/Select.svelte'
@@ -7,15 +7,15 @@
 
   let showDialog = false
 
-  let proficiency: Proficiency
+  let proficiency: OtherProficiency
 
-  function edit(_proficiency: Proficiency) {
+  function edit(_proficiency: OtherProficiency) {
     proficiency = _proficiency
     showDialog = true
   }
 
   function add() {
-    proficiency = new Proficiency()
+    proficiency = new OtherProficiency()
     $data.proficiencies.push(proficiency)
     showDialog = true
   }
@@ -30,7 +30,7 @@
     close()
   }
 
-  const items = enumToSelect(ProficiencyType)
+  const items = enumToSelect(OtherProficiencyType)
 </script>
 
 {#if showDialog}
@@ -51,7 +51,7 @@
 <div class="grid p-2 w-full border">
   <span>Type</span><span>Proficiency</span><span />
   {#each $data.proficiencies as proficiency}
-    <span>{ProficiencyType[proficiency.type]}</span>
+    <span>{OtherProficiencyType[proficiency.type]}</span>
     <span>{proficiency.name}</span>
     <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(proficiency)}>edit</span>
   {/each}

@@ -5,7 +5,8 @@
   import Trackers from './Trackers.svelte'
   import Features from './Features.svelte'
   import Equipment from './Equipment.svelte'
-  import Proficiencies from './Proficiencies.svelte'
+  import OtherProficiencies from './OtherProficiencies.svelte'
+  import Skills from './Skills.svelte'
 
   $: console.log($data)
 </script>
@@ -84,16 +85,7 @@
         <span class="my-2 text-center">Saving Throws</span>
       </div>
 
-      <div class="flex flex-col pt-6 px-6 border">
-        {#each Object.entries($derived.skills) as [key, value]}
-          <label class="flex">
-            <input class="mr-4" type="checkbox" bind:checked={$data.skills[key]} />
-            <span class="mr-4">{value.modifier}</span>
-            {value.name}
-          </label>
-        {/each}
-        <span class="my-2 text-center">Skills</span>
-      </div>
+      <Skills />
     </div>
 
     <span class="flex mb-3 py-2 px-6 w-full border">
@@ -101,7 +93,7 @@
       <span class="flex-grow text-center">passive wisdom (perception)</span>
     </span>
 
-    <Proficiencies />
+    <OtherProficiencies />
   </div>
   <div class="px-1.5 flex-1">
     <div class="flex">
