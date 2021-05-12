@@ -1,6 +1,7 @@
 <script>
   import { range } from '../utils'
   import { AbilityType, data, derived, DiceType } from './model'
+  import Attacks from './Attacks.svelte'
   import Trackers from './Trackers.svelte'
   import Features from './Features.svelte'
 
@@ -127,6 +128,8 @@
       <input class="w-full text-center text-5xl" type="number" bind:value={$data.hp.temp} />
       Temporary Hit Points
     </label>
+
+    <Attacks />
 
     <div class="flex">
       <div class="mr-1.5 overflow-hidden flex-1 p-2 border text-center">

@@ -16,7 +16,21 @@ export enum AbilityType {
   INT,
   WIS,
   CHA,
-  SPELL,
+}
+
+export class Attack {
+  constructor(
+    public name: string = '',
+    public attackAbility: AbilityType = AbilityType.STR,
+    public attackModifier: number = 0,
+    public proficient: boolean = true,
+    public range: string = '20/60 feet',
+
+    public damageRoll: string = '',
+    public damageAbility: AbilityType = AbilityType.STR,
+    public damageModifier: number = 0,
+    public damageType: string = ''
+  ) {}
 }
 
 export class Feature {
@@ -98,13 +112,14 @@ export class DnD5eData {
     failure: 0,
   }
 
+  attacks: Array<Attack> = []
+
   traits: string = ''
   ideals: string = ''
   bonds: string = ''
   flaws: string = ''
 
   trackers: Array<Tracker> = [new Tracker('Class Resource'), new Tracker('Other Resource')]
-  trackers: Array<Tracker> = []
   features: Array<Feature> = []
 }
 
@@ -210,5 +225,13 @@ export const derived = derivedStore(data, data => {
         modifier: abilityScores[AbilityType.WIS].modifier + (data.skills.survival ? data.proficiency : 0),
       },
     },
+
+    attacks: data.attacks.map(attack => ({
+      attackModifier:
+        abilityScores[attack.attackAbility].modifier +
+        attack.attackModifier +
+        (attack.proficient ? data.proficiency : 0),
+      fullDamageRoll: `${attack.damageRoll}+${abilityScores[attack.damageAbility].modifier + attack.damageModifier}`,
+    })),
   }
 })

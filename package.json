@@ -26,7 +26,6 @@
     "rollup-plugin-terser": "^7.0.0",
     "rollup-plugin-transform-input": "git+https://github.com/RedHatter/rollup-plugin-transform-input.git",
     "sirv-cli": "^1.0.0",
-    "smelte": "^1.1.5",
     "svelte": "^3.0.0",
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^4.7.3",

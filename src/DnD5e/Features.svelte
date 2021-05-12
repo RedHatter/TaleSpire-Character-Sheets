@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Dialog from 'smelte/src/components/Dialog'
-  import TextField from 'smelte/src/components/TextField'
-  import Button from 'smelte/src/components/Button'
+  import Dialog from '../components/Dialog.svelte'
+  import TextField from '../components/TextField.svelte'
   import { data, Feature } from './model'
   import type { DnD5eData } from './model'
 
@@ -31,23 +30,28 @@
   }
 </script>
 
-<Dialog bind:value={showDialog}>
-  <TextField label="Name" bind:value={feature.name} />
-  <TextField label="Source" bind:value={feature.source} />
-  <TextField label="Description" bind:value={feature.description} textarea />
+{#if showDialog}
+  <Dialog on:close={close}>
+    <TextField label="Name" bind:value={feature.name} />
+    <TextField label="Source" bind:value={feature.source} />
+    <TextField label="Description" type="textarea" class="w-96 h-72" bind:value={feature.description} />
 
-  <div class="flex justify-between w-full" slot="actions">
-    <Button text color="red" on:click={remove}>Remove</Button>
-    <Button text on:click={close}>Done</Button>
-  </div>
-</Dialog>
+    <div class="flex justify-between w-full" slot="actions">
+      <button class="py-2 px-4 text-red-400 uppercase font-medium text-sm" on:click={remove}>Remove</button>
+      <button class="text-primary-400 py-2 px-4 uppercase font-medium text-sm" on:click={close}>Done</button>
+    </div>
+  </Dialog>
+{/if}
 
 <div class="p-4 border">
   {#each $data.features as feature}
     <label class="mb-4">
       <div class="relative text-lg">
         {feature.name}
-        <span class="material-icons absolute right-0 text-gray-400 text-sm" on:click={() => edit(feature)}>edit</span>
+        <span
+          class="material-icons absolute right-0 text-gray-400 text-sm"
+          on:click|stopPropagation={() => edit(feature)}>edit</span
+        >
       </div>
       <div class="text-sm">{feature.source}</div>
       <input type="checkbox" />
