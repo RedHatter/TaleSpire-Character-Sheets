@@ -67,16 +67,23 @@
   </Dialog>
 {/if}
 
-<div class="grid grid-cols-3 relative mb-3 p-2 border">
-  <span>Name</span><span>Atk</span><span>Damage</span>
+<div class="grid gap-2 relative mb-3 p-2 border">
+  <span>Name</span><span>Atk</span><span>Damage</span><span />
   {#each $data.attacks as attack, i}
     <span>{attack.name}</span>
     <span>{$derived.attacks[i].attackModifier}</span>
     <span>
       {$derived.attacks[i].fullDamageRoll}
       {attack.damageType}
-      <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>
     </span>
+    <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>
   {/each}
-  <button on:click={add}>+ Add new attack</button>
+  <button class="col-span-3" on:click={add}>+</button>
+  <span class="col-span-3 text-center">Attacks</span>
 </div>
+
+<style>
+  .grid {
+    grid-template-columns: 1fr auto 1fr auto;
+  }
+</style>

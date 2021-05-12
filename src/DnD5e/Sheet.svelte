@@ -4,6 +4,7 @@
   import Attacks from './Attacks.svelte'
   import Trackers from './Trackers.svelte'
   import Features from './Features.svelte'
+  import Equipment from './Equipment.svelte'
 
   $: console.log($data)
 </script>
@@ -129,9 +130,7 @@
       Temporary Hit Points
     </label>
 
-    <Attacks />
-
-    <div class="flex">
+    <div class="flex mb-3">
       <div class="mr-1.5 overflow-hidden flex-1 p-2 border text-center">
         <label class="flex">
           Total
@@ -164,6 +163,9 @@
         <span class="text-center">Death Saves</span>
       </div>
     </div>
+
+    <Attacks />
+    <Equipment />
   </div>
   <div class="pl-1.5 flex-1">
     <div class="mb-3 p-2 border">

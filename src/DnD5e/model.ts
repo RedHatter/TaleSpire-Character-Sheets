@@ -33,6 +33,22 @@ export class Attack {
   ) {}
 }
 
+export enum ItemType {
+  Item,
+  Equipment,
+}
+
+export class Item {
+  constructor(
+    public name: string = '',
+    public description: string = '',
+    public count: number = 1,
+    public weight: number = 0,
+    public type: ItemType = ItemType.Item,
+    public isEquipped: boolean = false
+  ) {}
+}
+
 export class Feature {
   constructor(public name: string = '', public source: string = '', public description: string = '') {}
 }
@@ -114,6 +130,10 @@ export class DnD5eData {
 
   attacks: Array<Attack> = []
 
+  equipment: Array<Item> = []
+
+  coin: number = 0
+
   traits: string = ''
   ideals: string = ''
   bonds: string = ''
@@ -142,6 +162,20 @@ export const derived = derivedStore(data, data => {
     modifier: Math.floor((base - 10) / 2),
     name: abilityNames[type],
   }))
+
+  let copper = data.coin
+
+  let platinum = Math.floor(copper / 1000)
+  copper = copper % 1000
+
+  let gold = Math.floor(copper / 100)
+  copper = copper % 100
+
+  let electrum = Math.floor(copper / 50)
+  copper = copper % 50
+
+  let silver = Math.floor(copper / 10)
+  copper = copper % 10
 
   return {
     abilityScores,
@@ -233,5 +267,15 @@ export const derived = derivedStore(data, data => {
         (attack.proficient ? data.proficiency : 0),
       fullDamageRoll: `${attack.damageRoll}+${abilityScores[attack.damageAbility].modifier + attack.damageModifier}`,
     })),
+
+    coin: {
+      copper,
+      silver,
+      electrum,
+      gold,
+      platinum,
+    },
+
+    totalWeight: data.equipment.reduce((val, item) => val + item.weight, 0),
   }
 })
