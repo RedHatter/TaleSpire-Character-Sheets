@@ -5,6 +5,7 @@
   import Trackers from './Trackers.svelte'
   import Features from './Features.svelte'
   import Equipment from './Equipment.svelte'
+  import Proficiencies from './Proficiencies.svelte'
 
   $: console.log($data)
 </script>
@@ -95,10 +96,12 @@
       </div>
     </div>
 
-    <span class="flex m-3 py-2 px-6 w-full border">
+    <span class="flex mb-3 py-2 px-6 w-full border">
       <span class="w-12">{10 + $derived.skills.perception.modifier}</span>
       <span class="flex-grow text-center">passive wisdom (perception)</span>
     </span>
+
+    <Proficiencies />
   </div>
   <div class="px-1.5 flex-1">
     <div class="flex">

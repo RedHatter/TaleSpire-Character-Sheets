@@ -4,6 +4,7 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import { data, derived, Item, ItemType } from './model'
+  import { enumToSelect } from '../utils'
 
   let showDialog = false
   let item: Item
@@ -29,9 +30,7 @@
     close()
   }
 
-  const types = Object.entries(ItemType)
-    .filter(o => typeof o[1] === 'number')
-    .map(([text, value]) => ({ value, text }))
+  const types = enumToSelect(ItemType)
 
   let { copper, silver, electrum, gold, platinum } = $derived.coin
 

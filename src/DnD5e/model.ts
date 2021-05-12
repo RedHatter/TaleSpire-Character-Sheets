@@ -49,6 +49,21 @@ export class Item {
   ) {}
 }
 
+export enum ProficiencyType {
+  Language,
+  Weapon,
+  Armor,
+  Other,
+}
+
+export class Proficiency {
+  constructor(
+    public type: ProficiencyType = ProficiencyType.Language,
+    public name: string = '',
+    public source: string = ''
+  ) {}
+}
+
 export class Feature {
   constructor(public name: string = '', public source: string = '', public description: string = '') {}
 }
@@ -74,6 +89,8 @@ export class DnD5eData {
     [AbilityType.WIS]: 10,
     [AbilityType.CHA]: 10,
   }
+
+  proficiencies: Array<Proficiency> = []
 
   inspiration: boolean = false
   proficiency: number = 2

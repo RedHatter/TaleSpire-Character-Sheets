@@ -4,6 +4,7 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import { data, derived, Attack, AbilityType } from './model'
+  import { enumToSelect } from '../utils'
 
   let showDialog = false
 
@@ -30,9 +31,7 @@
     close()
   }
 
-  const items = Object.entries(AbilityType)
-    .filter(o => typeof o[1] === 'number')
-    .map(([text, value]) => ({ value, text }))
+  const items = enumToSelect(AbilityType)
 </script>
 
 {#if showDialog}

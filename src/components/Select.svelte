@@ -4,7 +4,7 @@
     text: string
   }
 
-  export let items: Array<any>
+  export let items: Array<Option>
   export let label: string
 
   export let value: any

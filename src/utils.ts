@@ -18,3 +18,9 @@ export function debounce(fn: Function, delay: number): Function {
 export function mapObject(obj: any, fn: Function) {
   return Object.fromEntries(Object.entries(obj).map(([key, val]) => [key, fn(val, key)]))
 }
+
+export function enumToSelect(obj: Object): Array<{ value: number; text: string }> {
+  return Object.entries(obj)
+    .filter(o => typeof o[1] === 'number')
+    .map(([text, value]) => ({ value, text }))
+}
