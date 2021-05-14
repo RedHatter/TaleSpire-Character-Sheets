@@ -1,5 +1,6 @@
 <script lang="ts">
   import { data, Tracker } from './model'
+  import { handDrawn } from '../utils'
 
   function add() {
     data.update(data => {
@@ -11,7 +12,7 @@
 
 <div class="grid grid-cols-2 gap-3 mb-3">
   {#each $data.trackers as tracker}
-    <div class="p-2 border">
+    <div class="p-2" use:handDrawn>
       <div class="flex">
         Total
         <input

@@ -4,7 +4,7 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import { data, derived, Item, ItemType } from './model'
-  import { enumToSelect } from '../utils'
+  import { enumToSelect, handDrawn } from '../utils'
 
   let showDialog = false
   let item: Item
@@ -63,7 +63,7 @@
   </Dialog>
 {/if}
 
-<div class="mb-3 p-2 border">
+<div class="mb-3 p-2" use:handDrawn>
   <div class="grid grid-cols-5">
     <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
     <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>

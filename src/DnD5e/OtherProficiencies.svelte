@@ -1,6 +1,6 @@
 <script lang="ts">
   import { data, OtherProficiency, OtherProficiencyType } from './model'
-  import { enumToSelect } from '../utils'
+  import { enumToSelect, handDrawn } from '../utils'
   import Dialog from '../components/Dialog.svelte'
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
@@ -48,7 +48,7 @@
   </Dialog>
 {/if}
 
-<div class="grid p-2 w-full border">
+<div class="grid p-2 w-full" use:handDrawn>
   <span>Type</span><span>Proficiency</span><span />
   {#each $data.proficiencies as proficiency}
     <span>{OtherProficiencyType[proficiency.type]}</span>

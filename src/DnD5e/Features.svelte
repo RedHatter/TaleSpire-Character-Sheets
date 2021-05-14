@@ -3,6 +3,7 @@
   import TextField from '../components/TextField.svelte'
   import { data, Feature } from './model'
   import type { DnD5eData } from './model'
+  import { handDrawn } from '../utils'
 
   let showDialog = false
 
@@ -43,7 +44,7 @@
   </Dialog>
 {/if}
 
-<div class="p-4 border">
+<div class="p-4" use:handDrawn>
   {#each $data.features as feature}
     <label class="mb-4">
       <div class="relative text-lg">

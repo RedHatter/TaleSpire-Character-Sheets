@@ -15,6 +15,10 @@
     cursor: pointer;
   }
 
+  input {
+    background-color: transparent;
+  }
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     margin: 0;

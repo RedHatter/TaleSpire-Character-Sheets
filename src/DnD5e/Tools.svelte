@@ -3,7 +3,7 @@
   import TextField from '../components/TextField.svelte'
   import Dialog from '../components/Dialog.svelte'
   import { data, derived, AbilityType, CustomSkill, SkillProficiencyType } from './model'
-  import { enumToSelect } from '../utils'
+  import { enumToSelect, handDrawn } from '../utils'
 
   let showDialog = false
   let tool: CustomSkill
@@ -58,7 +58,7 @@
   </Dialog>
 {/if}
 
-<div class="grid gap-2 mb-3 p-2 w-full border">
+<div class="grid gap-2 mb-3 p-2 w-full" use:handDrawn>
   <span>Tool</span><span>Pro</span><span>Ability</span><span />
   {#each $data.tools as tool, key}
     <label class="contents">

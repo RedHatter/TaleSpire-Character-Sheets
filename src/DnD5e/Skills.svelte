@@ -2,6 +2,7 @@
   import Dialog from '../components/Dialog.svelte'
   import Select from '../components/Select.svelte'
   import { data, derived, SkillProficiencyType } from './model'
+  import { handDrawn } from '../utils'
 
   let showDialog = false
 
@@ -31,7 +32,7 @@
   </Dialog>
 {/if}
 
-<div class="skills grid gap-x-2 items-center mb-3 pt-6 px-6 border">
+<div class="skills grid gap-x-2 items-center mb-3 pt-6 px-6" use:handDrawn>
   <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
     edit
   </span>

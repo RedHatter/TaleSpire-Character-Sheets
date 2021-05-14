@@ -4,7 +4,7 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import { data, derived, Attack, AbilityType } from './model'
-  import { enumToSelect } from '../utils'
+  import { enumToSelect, handDrawn } from '../utils'
 
   let showDialog = false
 
@@ -66,7 +66,7 @@
   </Dialog>
 {/if}
 
-<div class="grid gap-2 relative mb-3 p-2 border">
+<div class="grid gap-2 relative mb-3 p-2" use:handDrawn>
   <span>Name</span><span>Atk</span><span>Damage</span><span />
   {#each $data.attacks as attack, i}
     <span>{attack.name}</span>
