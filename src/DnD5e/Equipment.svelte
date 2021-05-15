@@ -3,8 +3,9 @@
   import TextField from '../components/TextField.svelte'
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
+  import Container from '../components/Container.svelte'
   import { data, derived, Item, ItemType } from './model'
-  import { enumToSelect, handDrawn } from '../utils'
+  import { enumToSelect } from '../utils'
 
   let showDialog = false
   let item: Item
@@ -63,7 +64,7 @@
   </Dialog>
 {/if}
 
-<div class="mb-3 p-2" use:handDrawn>
+<Container class="mb-3">
   <div class="grid grid-cols-5">
     <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
     <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>
@@ -104,7 +105,7 @@
     <div class="text-2xl">{$derived.totalWeight}</div>
     Equipment
   </div>
-</div>
+</Container>
 
 <style>
   .items {

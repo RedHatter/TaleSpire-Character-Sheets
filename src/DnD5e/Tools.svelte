@@ -3,7 +3,8 @@
   import TextField from '../components/TextField.svelte'
   import Dialog from '../components/Dialog.svelte'
   import { data, derived, AbilityType, CustomSkill, SkillProficiencyType } from './model'
-  import { enumToSelect, handDrawn } from '../utils'
+  import { enumToSelect } from '../utils'
+  import Container from '../components/Container.svelte'
 
   let showDialog = false
   let tool: CustomSkill
@@ -58,21 +59,23 @@
   </Dialog>
 {/if}
 
-<div class="grid gap-2 mb-3 p-2 w-full" use:handDrawn>
-  <span>Tool</span><span>Pro</span><span>Ability</span><span />
-  {#each $data.tools as tool, key}
-    <label class="contents">
-      <span>{tool.name}</span>
-      <span>{$derived.tools[key].modifier}</span>
-      <span>{$derived.tools[key].ability}</span>
-      <span class="material-icons text-gray-400 text-sm" on:click={() => edit(tool)}>edit</span>
-      <input class="hidden" type="checkbox" />
-      <div class="col-span-4">{tool.description}</div>
-    </label>
-  {/each}
-  <button class="col-span-4" on:click={add}>+</button>
-  <span class="col-span-4 text-center">Tool Proficiencies & Custom Skills</span>
-</div>
+<Container class="mb-3 w-full">
+  <div class="grid gap-2">
+    <span>Tool</span><span>Pro</span><span>Ability</span><span />
+    {#each $data.tools as tool, key}
+      <label class="contents">
+        <span>{tool.name}</span>
+        <span>{$derived.tools[key].modifier}</span>
+        <span>{$derived.tools[key].ability}</span>
+        <span class="material-icons text-gray-400 text-sm" on:click={() => edit(tool)}>edit</span>
+        <input class="hidden" type="checkbox" />
+        <div class="col-span-4">{tool.description}</div>
+      </label>
+    {/each}
+    <button class="col-span-4" on:click={add}>+</button>
+    <span class="col-span-4 text-center">Tool Proficiencies & Custom Skills</span>
+  </div>
+</Container>
 
 <style>
   .grid {

@@ -4,7 +4,8 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import { data, derived, Attack, AbilityType } from './model'
-  import { enumToSelect, handDrawn } from '../utils'
+  import { enumToSelect } from '../utils'
+  import Container from '../components/Container.svelte'
 
   let showDialog = false
 
@@ -66,20 +67,22 @@
   </Dialog>
 {/if}
 
-<div class="grid gap-2 relative mb-3 p-2" use:handDrawn>
-  <span>Name</span><span>Atk</span><span>Damage</span><span />
-  {#each $data.attacks as attack, i}
-    <span>{attack.name}</span>
-    <span>{$derived.attacks[i].attackModifier}</span>
-    <span>
-      {$derived.attacks[i].fullDamageRoll}
-      {attack.damageType}
-    </span>
-    <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>
-  {/each}
-  <button class="col-span-3" on:click={add}>+</button>
-  <span class="col-span-3 text-center">Attacks</span>
-</div>
+<Container class="mb-3">
+  <div class="grid gap-2 relative">
+    <span>Name</span><span>Atk</span><span>Damage</span><span />
+    {#each $data.attacks as attack, i}
+      <span>{attack.name}</span>
+      <span>{$derived.attacks[i].attackModifier}</span>
+      <span>
+        {$derived.attacks[i].fullDamageRoll}
+        {attack.damageType}
+      </span>
+      <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>
+    {/each}
+    <button class="col-span-3" on:click={add}>+</button>
+    <span class="col-span-3 text-center">Attacks</span>
+  </div>
+</Container>
 
 <style>
   .grid {

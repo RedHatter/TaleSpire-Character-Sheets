@@ -1,8 +1,8 @@
 <script lang="ts">
+  import Container from '../components/Container.svelte'
+
   import Dialog from '../components/Dialog.svelte'
-  import Select from '../components/Select.svelte'
   import { data, derived, SkillProficiencyType } from './model'
-  import { handDrawn } from '../utils'
 
   let showDialog = false
 
@@ -32,25 +32,27 @@
   </Dialog>
 {/if}
 
-<div class="skills grid gap-x-2 items-center mb-3 pt-6 px-6" use:handDrawn>
-  <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
-    edit
-  </span>
-  {#each Object.entries($derived.skills) as [key, value]}
-    <span class="material-icons text-right text-sm">
-      {$data.skills[key] == SkillProficiencyType.Proficient
-        ? 'check_box'
-        : $data.skills[key] == SkillProficiencyType.Expertise
-        ? 'check_boxcheck_box'
-        : $data.skills[key] == SkillProficiencyType.JackOfAllTrades
-        ? 'indeterminate_check_box'
-        : 'check_box_outline_blank'}
+<Container class="skills mb-3 pt-6 px-6">
+  <div class="skills grid gap-x-2 items-center">
+    <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
+      edit
     </span>
-    <span>{value.modifier}</span>
-    <span>{value.name}</span>
-  {/each}
-  <span class="col-span-3 my-2 text-center">Skills</span>
-</div>
+    {#each Object.entries($derived.skills) as [key, value]}
+      <span class="material-icons text-right text-sm">
+        {$data.skills[key] == SkillProficiencyType.Proficient
+          ? 'check_box'
+          : $data.skills[key] == SkillProficiencyType.Expertise
+          ? 'check_boxcheck_box'
+          : $data.skills[key] == SkillProficiencyType.JackOfAllTrades
+          ? 'indeterminate_check_box'
+          : 'check_box_outline_blank'}
+      </span>
+      <span>{value.modifier}</span>
+      <span>{value.name}</span>
+    {/each}
+    <span class="col-span-3 my-2 text-center">Skills</span>
+  </div>
+</Container>
 
 <style>
   .dialog {

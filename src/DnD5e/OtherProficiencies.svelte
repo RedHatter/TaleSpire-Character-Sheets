@@ -4,6 +4,7 @@
   import Dialog from '../components/Dialog.svelte'
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
+  import Container from '../components/Container.svelte'
 
   let showDialog = false
 
@@ -48,15 +49,17 @@
   </Dialog>
 {/if}
 
-<div class="grid p-2 w-full" use:handDrawn>
-  <span>Type</span><span>Proficiency</span><span />
-  {#each $data.proficiencies as proficiency}
-    <span>{OtherProficiencyType[proficiency.type]}</span>
-    <span>{proficiency.name}</span>
-    <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(proficiency)}>edit</span>
-  {/each}
-  <button class="col-span-3" on:click={add}>+</button>
-</div>
+<Container class="w-full">
+  <div class="grid">
+    <span>Type</span><span>Proficiency</span><span />
+    {#each $data.proficiencies as proficiency}
+      <span>{OtherProficiencyType[proficiency.type]}</span>
+      <span>{proficiency.name}</span>
+      <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(proficiency)}>edit</span>
+    {/each}
+    <button class="col-span-3" on:click={add}>+</button>
+  </div>
+</Container>
 
 <style>
   .grid {

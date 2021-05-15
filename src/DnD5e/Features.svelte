@@ -1,9 +1,9 @@
 <script lang="ts">
   import Dialog from '../components/Dialog.svelte'
   import TextField from '../components/TextField.svelte'
+  import Container from '../components/Container.svelte'
   import { data, Feature } from './model'
   import type { DnD5eData } from './model'
-  import { handDrawn } from '../utils'
 
   let showDialog = false
 
@@ -44,7 +44,7 @@
   </Dialog>
 {/if}
 
-<div class="p-4" use:handDrawn>
+<Container class="p-4">
   {#each $data.features as feature}
     <label class="mb-4">
       <div class="relative text-lg">
@@ -63,7 +63,7 @@
   {/each}
   <button class="w-full" on:click={add}>+</button>
   <div class="text-center">Features & Traits</div>
-</div>
+</Container>
 
 <style>
   input[type='checkbox'],

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { data, Tracker } from './model'
-  import { handDrawn } from '../utils'
+  import Container from '../components/Container.svelte'
 
   function add() {
     data.update(data => {
@@ -12,7 +12,7 @@
 
 <div class="grid grid-cols-2 gap-3 mb-3">
   {#each $data.trackers as tracker}
-    <div class="p-2" use:handDrawn>
+    <Container>
       <div class="flex">
         Total
         <input
@@ -23,7 +23,7 @@
       </div>
       <input class="w-full text-center text-3xl" type="number" bind:value={tracker.current} />
       <input class="w-full text-center" bind:value={tracker.name} />
-    </div>
+    </Container>
   {/each}
 </div>
 <button class="mb-3 w-full" on:click={add}>+</button>
