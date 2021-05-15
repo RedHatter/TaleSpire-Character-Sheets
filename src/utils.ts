@@ -28,8 +28,7 @@ export function enumToSelect(obj: Object): Array<{ value: number; text: string }
 const resizeObserver = new ResizeObserver(entries => {
   for (const entry of entries) {
     const node = entry.target as HTMLElement
-    const size = entry.borderBoxSize as unknown as ResizeObserverSize
-    node.style.backgroundImage = box(Math.floor(size.inlineSize), Math.floor(size.blockSize))
+    node.style.backgroundImage = box(node.clientWidth, node.clientHeight)
   }
 })
 
