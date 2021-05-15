@@ -49,8 +49,8 @@
     </label>
   </Container>
 </div>
-<div class="flex">
-  <div class="pr-1.5 flex flex-1 flex-wrap">
+<div class="grid grid-cols-3 gap-3">
+  <div class="flex flex-wrap">
     <div class="pr-1.5 w-1/3">
       {#each Object.entries($derived.abilityScores) as [type, ability]}
         <Container class="mb-6">
@@ -104,25 +104,23 @@
     <Tools />
     <OtherProficiencies />
   </div>
-  <div class="px-1.5 flex-1">
-    <div class="flex">
-      <Container class="flex-1 mb-3">
-        <label class="block text-center">
-          <input class="w-full text-center text-5xl" type="number" bind:value={$data.armorClass} /> Armor Class
-        </label>
-      </Container>
-      <Container class="flex-1 mx-3 mb-3 py-2 text-center">
-        <div class="w-full text-5xl">{$derived.abilityScores[AbilityType.DEX].modifier}</div>
-        Initiative
-      </Container>
-      <Container class="flex-1 mb-3">
-        <label class="block text-center">
-          <input class="w-full text-center text-5xl" type="number" bind:value={$data.speed} /> Speed
-        </label>
-      </Container>
-    </div>
+  <div class="second">
+    <Container area="ac">
+      <label class="block text-center">
+        <input class="w-full text-center text-5xl" type="number" bind:value={$data.armorClass} /> Armor Class
+      </label>
+    </Container>
+    <Container class="py-2 text-center" area="in">
+      <div class="w-full text-5xl">{$derived.abilityScores[AbilityType.DEX].modifier}</div>
+      Initiative
+    </Container>
+    <Container area="speed">
+      <label class="block text-center">
+        <input class="w-full text-center text-5xl" type="number" bind:value={$data.speed} /> Speed
+      </label>
+    </Container>
 
-    <Container class="flex flex-col mb-3 w-full text-center">
+    <Container class="flex flex-col w-full text-center" area="hp">
       <label class="flex w-full">
         Hit Point Maximum
         <input class="flex-grow ml-2 border-b border-gray-200 text-center" type="number" bind:value={$data.hp.max} />
@@ -133,63 +131,61 @@
       </label>
     </Container>
 
-    <Container class="mb-3">
+    <Container area="tmp">
       <label class="block w-full text-center">
         <input class="w-full text-center text-5xl" type="number" bind:value={$data.hp.temp} />
         Temporary Hit Points
       </label>
     </Container>
 
-    <div class="flex mb-3">
-      <Container class="mr-1.5 overflow-hidden flex-1 text-center">
-        <label class="flex">
-          Total
-          <input
-            class="overflow-hidden flex-1 ml-2 border-b border-gray-200 text-center"
-            type="number"
-            bind:value={$data.hitDice.max}
-          />
-        </label>
-        <input class="w-full text-center text-2xl" type="number" bind:value={$data.hitDice.current} />
-        Hit Dice (<select class="w-7" bind:value={$data.hitDice.type}>
-          {#each Object.entries(DiceType).filter(o => typeof o[1] === 'number') as [label, value]}
-            <option {value}>{label}</option>
-          {/each}
-        </select>)
-      </Container>
-      <Container class="ml-1.5 flex overflow-hidden flex-1 flex-col justify-around px-2">
-        <span class="flex" on:click={e => ($data.deathSaves.success = ($data.deathSaves.success + 1) % 4)}>
-          <span class="w-1/2">Success</span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.success >= 1 ? 'check_box' : 'check_box_outline_blank'}
-          </span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.success >= 2 ? 'check_box' : 'check_box_outline_blank'}
-          </span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.success >= 3 ? 'check_box' : 'check_box_outline_blank'}
-          </span>
+    <Container class="overflow-hidden text-center" area="hit">
+      <label class="flex">
+        Total
+        <input
+          class="overflow-hidden flex-1 ml-2 border-b border-gray-200 text-center"
+          type="number"
+          bind:value={$data.hitDice.max}
+        />
+      </label>
+      <input class="w-full text-center text-2xl" type="number" bind:value={$data.hitDice.current} />
+      Hit Dice (<select class="w-7" bind:value={$data.hitDice.type}>
+        {#each Object.entries(DiceType).filter(o => typeof o[1] === 'number') as [label, value]}
+          <option {value}>{label}</option>
+        {/each}
+      </select>)
+    </Container>
+    <Container class="flex overflow-hidden flex-col justify-around px-2" area="ds">
+      <span class="flex" on:click={e => ($data.deathSaves.success = ($data.deathSaves.success + 1) % 4)}>
+        <span class="w-1/2">Success</span>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.success >= 1 ? 'check_box' : 'check_box_outline_blank'}
         </span>
-        <span class="flex" on:click={e => ($data.deathSaves.failure = ($data.deathSaves.failure + 1) % 4)}>
-          <span class="w-1/2">Failure</span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.failure >= 1 ? 'disabled_by_default' : 'check_box_outline_blank'}
-          </span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.failure >= 2 ? 'disabled_by_default' : 'check_box_outline_blank'}
-          </span>
-          <span class="material-icons pointer-events-none">
-            {$data.deathSaves.failure >= 3 ? 'disabled_by_default' : 'check_box_outline_blank'}
-          </span>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.success >= 2 ? 'check_box' : 'check_box_outline_blank'}
         </span>
-        <span class="text-center">Death Saves</span>
-      </Container>
-    </div>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.success >= 3 ? 'check_box' : 'check_box_outline_blank'}
+        </span>
+      </span>
+      <span class="flex" on:click={e => ($data.deathSaves.failure = ($data.deathSaves.failure + 1) % 4)}>
+        <span class="w-1/2">Failure</span>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.failure >= 1 ? 'disabled_by_default' : 'check_box_outline_blank'}
+        </span>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.failure >= 2 ? 'disabled_by_default' : 'check_box_outline_blank'}
+        </span>
+        <span class="material-icons pointer-events-none">
+          {$data.deathSaves.failure >= 3 ? 'disabled_by_default' : 'check_box_outline_blank'}
+        </span>
+      </span>
+      <span class="text-center">Death Saves</span>
+    </Container>
 
     <Attacks />
     <Equipment />
   </div>
-  <div class="pl-1.5 flex-1">
+  <div>
     <Container class="mb-3">
       <textarea class="w-full" bind:value={$data.traits} />
       <div class="text-center">Personality Traits</div>
@@ -210,3 +206,19 @@
     <Features />
   </div>
 </div>
+
+<style>
+  .second {
+    @apply grid gap-3;
+    justify-content: start;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, max-content);
+    grid-template-areas:
+      'ac ac in in speed speed'
+      'hp hp hp hp hp hp'
+      'tmp tmp tmp tmp tmp tmp'
+      'hit hit hit ds ds ds'
+      'atk atk atk atk atk atk'
+      'inv inv inv inv inv inv';
+  }
+</style>

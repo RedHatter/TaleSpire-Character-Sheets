@@ -64,7 +64,7 @@
   </Dialog>
 {/if}
 
-<Container class="mb-3">
+<Container area="inv">
   <div class="grid grid-cols-5">
     <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
     <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>

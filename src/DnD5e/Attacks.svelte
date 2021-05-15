@@ -67,7 +67,7 @@
   </Dialog>
 {/if}
 
-<Container class="mb-3">
+<Container area="atk">
   <div class="grid gap-2 relative">
     <span>Name</span><span>Atk</span><span>Damage</span><span />
     {#each $data.attacks as attack, i}
