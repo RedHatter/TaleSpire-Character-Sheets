@@ -63,8 +63,7 @@
     </div>
   </Dialog>
 {/if}
-
-<Container area="inv">
+<Container area="inv" title="Equipment">
   <div class="grid grid-cols-5">
     <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
     <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>
@@ -103,7 +102,6 @@
   <div class="text-center">
     <div>Total Weight</div>
     <div class="text-2xl">{$derived.totalWeight}</div>
-    Equipment
   </div>
 </Container>
 

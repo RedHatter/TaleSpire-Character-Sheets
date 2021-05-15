@@ -68,7 +68,7 @@
 {/if}
 
 <Container area="atk">
-  <div class="grid gap-2 relative">
+  <div class="grid gap-2 relative" title="Attacks">
     <span>Name</span><span>Atk</span><span>Damage</span><span />
     {#each $data.attacks as attack, i}
       <span>{attack.name}</span>
@@ -79,9 +79,8 @@
       </span>
       <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>
     {/each}
-    <button class="col-span-3" on:click={add}>+</button>
-    <span class="col-span-3 text-center">Attacks</span>
   </div>
+  <button on:click={add}>+</button>
 </Container>
 
 <style>

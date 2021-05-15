@@ -82,7 +82,7 @@
         </label>
       </Container>
 
-      <Container class="flex flex-col mb-3 pt-6 px-6">
+      <Container class="flex flex-col mb-3 pt-6 px-6" title="Saving Throws">
         {#each Object.entries($derived.savingThrows) as [type, value]}
           <label class="flex">
             <input class="mr-4" type="checkbox" bind:checked={$data.savingThrows[type]} />
@@ -90,7 +90,6 @@
             {value.name}
           </label>
         {/each}
-        <span class="my-2 text-center">Saving Throws</span>
       </Container>
 
       <Skills />
@@ -105,19 +104,14 @@
     <OtherProficiencies />
   </div>
   <div class="second">
-    <Container area="ac">
-      <label class="block text-center">
-        <input class="w-full text-center text-5xl" type="number" bind:value={$data.armorClass} /> Armor Class
-      </label>
+    <Container area="ac" title="Armor Class" label>
+      <input class="w-full text-center text-5xl" type="number" bind:value={$data.armorClass} />
     </Container>
-    <Container class="py-2 text-center" area="in">
+    <Container class="py-2 text-center" area="in" title="Initiative">
       <div class="w-full text-5xl">{$derived.abilityScores[AbilityType.DEX].modifier}</div>
-      Initiative
     </Container>
-    <Container area="speed">
-      <label class="block text-center">
-        <input class="w-full text-center text-5xl" type="number" bind:value={$data.speed} /> Speed
-      </label>
+    <Container area="speed" title="Speed" label>
+      <input class="w-full text-center text-5xl" type="number" bind:value={$data.speed} />
     </Container>
 
     <Container class="flex flex-col w-full text-center" area="hp">
@@ -131,11 +125,8 @@
       </label>
     </Container>
 
-    <Container area="tmp">
-      <label class="block w-full text-center">
-        <input class="w-full text-center text-5xl" type="number" bind:value={$data.hp.temp} />
-        Temporary Hit Points
-      </label>
+    <Container area="tmp" title="Temporary Hit Points" label>
+      <input class="w-full text-center text-5xl" type="number" bind:value={$data.hp.temp} />
     </Container>
 
     <Container class="overflow-hidden text-center" area="hit">
@@ -154,8 +145,8 @@
         {/each}
       </select>)
     </Container>
-    <Container class="flex overflow-hidden flex-col justify-around px-2" area="ds">
-      <span class="flex" on:click={e => ($data.deathSaves.success = ($data.deathSaves.success + 1) % 4)}>
+    <Container class="flex overflow-hidden flex-col justify-around px-2" area="ds" title="Death Saves">
+      <div class="flex" on:click={e => ($data.deathSaves.success = ($data.deathSaves.success + 1) % 4)}>
         <span class="w-1/2">Success</span>
         <span class="material-icons pointer-events-none">
           {$data.deathSaves.success >= 1 ? 'check_box' : 'check_box_outline_blank'}
@@ -166,8 +157,8 @@
         <span class="material-icons pointer-events-none">
           {$data.deathSaves.success >= 3 ? 'check_box' : 'check_box_outline_blank'}
         </span>
-      </span>
-      <span class="flex" on:click={e => ($data.deathSaves.failure = ($data.deathSaves.failure + 1) % 4)}>
+      </div>
+      <div class="flex" on:click={e => ($data.deathSaves.failure = ($data.deathSaves.failure + 1) % 4)}>
         <span class="w-1/2">Failure</span>
         <span class="material-icons pointer-events-none">
           {$data.deathSaves.failure >= 1 ? 'disabled_by_default' : 'check_box_outline_blank'}
@@ -178,29 +169,24 @@
         <span class="material-icons pointer-events-none">
           {$data.deathSaves.failure >= 3 ? 'disabled_by_default' : 'check_box_outline_blank'}
         </span>
-      </span>
-      <span class="text-center">Death Saves</span>
+      </div>
     </Container>
 
     <Attacks />
     <Equipment />
   </div>
   <div>
-    <Container class="mb-3">
+    <Container class="mb-3" tilte="Personality Traits">
       <textarea class="w-full" bind:value={$data.traits} />
-      <div class="text-center">Personality Traits</div>
     </Container>
-    <Container class="mb-3">
+    <Container class="mb-3" tilte="Ideals">
       <textarea class="w-full" bind:value={$data.ideals} />
-      <div class="text-center">Ideals</div>
     </Container>
-    <Container class="mb-3">
+    <Container class="mb-3" tilte="Bonds">
       <textarea class="w-full" bind:value={$data.bonds} />
-      <div class="text-center">Bonds</div>
     </Container>
-    <Container class="mb-3">
+    <Container class="mb-3" tilte="Flaws">
       <textarea class="w-full" bind:value={$data.flaws} />
-      <div class="text-center">Flaws</div>
     </Container>
     <Trackers />
     <Features />

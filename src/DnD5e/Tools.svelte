@@ -59,7 +59,7 @@
   </Dialog>
 {/if}
 
-<Container class="mb-3 w-full">
+<Container class="mb-3 w-full" title="Tool Proficiencies & Custom Skills">
   <div class="grid gap-2">
     <span>Tool</span><span>Pro</span><span>Ability</span><span />
     {#each $data.tools as tool, key}
@@ -73,7 +73,6 @@
       </label>
     {/each}
     <button class="col-span-4" on:click={add}>+</button>
-    <span class="col-span-4 text-center">Tool Proficiencies & Custom Skills</span>
   </div>
 </Container>
 

@@ -44,7 +44,7 @@
   </Dialog>
 {/if}
 
-<Container class="p-4">
+<Container class="p-4" title="Features & Traits">
   {#each $data.features as feature}
     <label class="mb-4">
       <div class="relative text-lg">
@@ -62,7 +62,6 @@
     </label>
   {/each}
   <button class="w-full" on:click={add}>+</button>
-  <div class="text-center">Features & Traits</div>
 </Container>
 
 <style>

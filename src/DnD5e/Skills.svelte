@@ -32,7 +32,7 @@
   </Dialog>
 {/if}
 
-<Container class="skills mb-3 pt-6 px-6">
+<Container class="skills mb-3 pt-6 px-6" title="Skills">
   <div class="skills grid gap-x-2 items-center">
     <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
       edit
@@ -50,7 +50,6 @@
       <span>{value.modifier}</span>
       <span>{value.name}</span>
     {/each}
-    <span class="col-span-3 my-2 text-center">Skills</span>
   </div>
 </Container>
 
