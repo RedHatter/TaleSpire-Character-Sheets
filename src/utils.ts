@@ -15,7 +15,7 @@ export function debounce(fn: Function, delay: number): Function {
   }
 }
 
-export function mapObject(obj: any, fn: Function) {
+export function mapObject(obj: object, fn: Function): object {
   return Object.fromEntries(Object.entries(obj).map(([key, val]) => [key, fn(val, key)]))
 }
 

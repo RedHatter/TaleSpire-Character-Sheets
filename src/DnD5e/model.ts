@@ -1,5 +1,5 @@
-import { debounce, mapObject } from '../utils'
-import { writable, Subscriber, derived as derivedStore } from 'svelte/store'
+import { mapObject } from '../utils'
+import { nanoid as uid } from 'nanoid'
 
 export enum DiceType {
   D4,
@@ -90,7 +90,9 @@ export class Tracker {
 }
 
 export class DnD5eData {
-  name: string = ''
+  uid: string = uid(9)
+
+  name: string = 'Unnamed Character'
   playerClass: string = ''
   level: number = 1
   background: string = ''
@@ -179,10 +181,21 @@ export class DnD5eData {
   features: Array<Feature> = []
 }
 
-export const data = writable((JSON.parse(window.localStorage.getItem('data')) ?? new DnD5eData()) as DnD5eData)
-data.subscribe(
-  debounce(data => window.localStorage.setItem('$data', JSON.stringify(data)), 1000) as Subscriber<DnD5eData>
-)
+export interface DnD5eDerivedData {
+  abilityScores: { [key in AbilityType]: { name: string; modifier: number } }
+  savingThrows: { [key in AbilityType]: { name: string; modifier: number } }
+  tools: Array<{ ability: string; modifier: number }>
+  skills: { [key: string]: { name: string; modifier: number } }
+  attacks: Array<{ attackModifier: number; fullDamageRoll: string }>
+  coin: {
+    copper: number
+    silver: number
+    electrum: number
+    gold: number
+    platinum: number
+  }
+  totalWeight: number
+}
 
 const abilityNames = {
   [AbilityType.STR]: 'Strength',
@@ -193,7 +206,7 @@ const abilityNames = {
   [AbilityType.CHA]: 'Charisma',
 }
 
-export const derived = derivedStore(data, data => {
+export function deriveData(data: DnD5eData): DnD5eDerivedData {
   const abilityScores = mapObject(data.abilityScores, (base: number, type: AbilityType) => ({
     modifier: Math.floor((base - 10) / 2),
     name: abilityNames[type],
@@ -331,5 +344,5 @@ export const derived = derivedStore(data, data => {
     },
 
     totalWeight: data.equipment.reduce((val, item) => val + item.weight, 0),
-  }
-})
+  } as DnD5eDerivedData
+}

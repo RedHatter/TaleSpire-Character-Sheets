@@ -4,8 +4,12 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import Container from '../components/Container.svelte'
-  import { data, derived, Item, ItemType } from './model'
+  import { Item, ItemType } from './model'
+  import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
+
+  export let data: DnD5eData
+  export let derived: DnD5eDerivedData
 
   let showDialog = false
   let item: Item
@@ -17,33 +21,33 @@
 
   function add() {
     item = new Item()
-    $data.equipment.push(item)
+    data.equipment.push(item)
     showDialog = true
   }
 
   function close() {
-    $data = $data
+    data = data
     showDialog = false
   }
 
   function remove() {
-    $data.equipment.splice($data.equipment.indexOf(item), 1)
+    data.equipment.splice(data.equipment.indexOf(item), 1)
     close()
   }
 
   const types = enumToSelect(ItemType)
 
-  let { copper, silver, electrum, gold, platinum } = $derived.coin
+  let { copper, silver, electrum, gold, platinum } = derived.coin
 
   function resetCoin() {
-    copper = $derived.coin.copper
-    silver = $derived.coin.silver
-    electrum = $derived.coin.electrum
-    gold = $derived.coin.gold
-    platinum = $derived.coin.platinum
+    copper = derived.coin.copper
+    silver = derived.coin.silver
+    electrum = derived.coin.electrum
+    gold = derived.coin.gold
+    platinum = derived.coin.platinum
   }
 
-  $: $data.coin = copper + silver * 10 + electrum * 50 + gold * 100 + platinum * 1000
+  $: data.coin = copper + silver * 10 + electrum * 50 + gold * 100 + platinum * 1000
 </script>
 
 {#if showDialog}
@@ -73,7 +77,7 @@
   </div>
   <div class="grid gap-2 items">
     <span>Count</span><span>Name</span><span>Weight</span><span />
-    {#each $data.equipment.filter(o => o.type === ItemType.Equipment) as item}
+    {#each data.equipment.filter(o => o.type === ItemType.Equipment) as item}
       <label class:unequiped={!item.isEquipped} class="contents">
         <span>{item.count}</span>
         <span>{item.name}</span>
@@ -85,7 +89,7 @@
         <span class="col-span-3">{item.description}</span>
       </label>
     {/each}
-    {#each $data.equipment.filter(o => o.type === ItemType.Item) as item}
+    {#each data.equipment.filter(o => o.type === ItemType.Item) as item}
       <label class="contents">
         <span>{item.count}</span>
         <span>{item.name}</span>
@@ -101,7 +105,7 @@
   <button on:click={add}>+</button>
   <div class="text-center">
     <div>Total Weight</div>
-    <div class="text-2xl">{$derived.totalWeight}</div>
+    <div class="text-2xl">{derived.totalWeight}</div>
   </div>
 </Container>
 

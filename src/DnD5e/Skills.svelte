@@ -2,7 +2,11 @@
   import Container from '../components/Container.svelte'
 
   import Dialog from '../components/Dialog.svelte'
-  import { data, derived, SkillProficiencyType } from './model'
+  import { SkillProficiencyType } from './model'
+  import type { DnD5eData, DnD5eDerivedData } from './model'
+
+  export let data: DnD5eData
+  export let derived: DnD5eDerivedData
 
   let showDialog = false
 
@@ -15,9 +19,9 @@
   <Dialog on:close={close}>
     <div class="dialog grid gap-4 items-center">
       <span>Skill</span><span>Proficieny</span><span>Skill</span><span>Proficieny</span>
-      {#each Object.entries($derived.skills) as [key, value]}
+      {#each Object.entries(derived.skills) as [key, value]}
         <span>{value.name}</span>
-        <select bind:value={$data.skills[key]}>
+        <select bind:value={data.skills[key]}>
           <option value={SkillProficiencyType.None}>None</option>
           <option value={SkillProficiencyType.Proficient}>Proficient</option>
           <option value={SkillProficiencyType.Expertise}>Experties</option>
@@ -37,13 +41,13 @@
     <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
       edit
     </span>
-    {#each Object.entries($derived.skills) as [key, value]}
+    {#each Object.entries(derived.skills) as [key, value]}
       <span class="material-icons text-right text-sm">
-        {$data.skills[key] == SkillProficiencyType.Proficient
+        {data.skills[key] == SkillProficiencyType.Proficient
           ? 'check_box'
-          : $data.skills[key] == SkillProficiencyType.Expertise
+          : data.skills[key] == SkillProficiencyType.Expertise
           ? 'check_boxcheck_box'
-          : $data.skills[key] == SkillProficiencyType.JackOfAllTrades
+          : data.skills[key] == SkillProficiencyType.JackOfAllTrades
           ? 'indeterminate_check_box'
           : 'check_box_outline_blank'}
       </span>

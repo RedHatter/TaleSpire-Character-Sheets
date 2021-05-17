@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { data, OtherProficiency, OtherProficiencyType } from './model'
-  import { enumToSelect, handDrawn } from '../utils'
+  import { OtherProficiency, OtherProficiencyType } from './model'
+  import type { DnD5eData } from './model'
+  import { enumToSelect } from '../utils'
   import Dialog from '../components/Dialog.svelte'
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
   import Container from '../components/Container.svelte'
+
+  export let data: DnD5eData
 
   let showDialog = false
 
@@ -17,17 +20,17 @@
 
   function add() {
     proficiency = new OtherProficiency()
-    $data.proficiencies.push(proficiency)
+    data.proficiencies.push(proficiency)
     showDialog = true
   }
 
   function close() {
-    $data = $data
+    data = data
     showDialog = false
   }
 
   function remove() {
-    $data.proficiencies.splice($data.proficiencies.indexOf(proficiency), 1)
+    data.proficiencies.splice(data.proficiencies.indexOf(proficiency), 1)
     close()
   }
 
@@ -52,7 +55,7 @@
 <Container class="w-full">
   <div class="grid">
     <span>Type</span><span>Proficiency</span><span />
-    {#each $data.proficiencies as proficiency}
+    {#each data.proficiencies as proficiency}
       <span>{OtherProficiencyType[proficiency.type]}</span>
       <span>{proficiency.name}</span>
       <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(proficiency)}>edit</span>

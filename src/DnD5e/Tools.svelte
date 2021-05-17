@@ -2,9 +2,13 @@
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
   import Dialog from '../components/Dialog.svelte'
-  import { data, derived, AbilityType, CustomSkill, SkillProficiencyType } from './model'
+  import { AbilityType, CustomSkill, SkillProficiencyType } from './model'
+  import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
   import Container from '../components/Container.svelte'
+
+  export let data: DnD5eData
+  export let derived: DnD5eDerivedData
 
   let showDialog = false
   let tool: CustomSkill
@@ -18,17 +22,17 @@
 
   function add() {
     tool = new CustomSkill()
-    $data.tools.push(tool)
+    data.tools.push(tool)
     showDialog = true
   }
 
   function close() {
-    $data = $data
+    data = data
     showDialog = false
   }
 
   function remove() {
-    $data.tools.splice($data.tools.indexOf(tool), 1)
+    data.tools.splice(data.tools.indexOf(tool), 1)
     close()
   }
 </script>
@@ -62,11 +66,11 @@
 <Container class="mb-3 w-full" title="Tool Proficiencies & Custom Skills">
   <div class="grid gap-2">
     <span>Tool</span><span>Pro</span><span>Ability</span><span />
-    {#each $data.tools as tool, key}
+    {#each data.tools as tool, key}
       <label class="contents">
         <span>{tool.name}</span>
-        <span>{$derived.tools[key].modifier}</span>
-        <span>{$derived.tools[key].ability}</span>
+        <span>{derived.tools[key].modifier}</span>
+        <span>{derived.tools[key].ability}</span>
         <span class="material-icons text-gray-400 text-sm" on:click={() => edit(tool)}>edit</span>
         <input class="hidden" type="checkbox" />
         <div class="col-span-4">{tool.description}</div>

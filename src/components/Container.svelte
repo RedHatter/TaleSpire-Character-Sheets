@@ -3,9 +3,9 @@
 
   let clazz = ''
   export { clazz as class }
-  export let area: string
-  export let title: string
-  export let label: boolean
+  export let area: string = undefined
+  export let title: string = undefined
+  export let label: boolean = false
 
   $: style = area !== undefined ? 'grid-area:' + area : undefined
 </script>

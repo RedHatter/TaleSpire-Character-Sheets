@@ -1,17 +1,18 @@
 <script lang="ts">
-  import { data, Tracker } from './model'
+  import { Tracker } from './model'
+  import type { DnD5eData } from './model'
   import Container from '../components/Container.svelte'
 
+  export let data: DnD5eData
+
   function add() {
-    data.update(data => {
-      data.trackers.push(new Tracker('Other Resource'))
-      return data
-    })
+    data.trackers.push(new Tracker('Other Resource'))
+    data = data
   }
 </script>
 
 <div class="grid grid-cols-2 gap-3 mb-3">
-  {#each $data.trackers as tracker}
+  {#each data.trackers as tracker}
     <Container>
       <div class="flex">
         Total

@@ -3,9 +3,13 @@
   import TextField from '../components/TextField.svelte'
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
-  import { data, derived, Attack, AbilityType } from './model'
+  import { Attack, AbilityType } from './model'
+  import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
   import Container from '../components/Container.svelte'
+
+  export let data: DnD5eData
+  export let derived: DnD5eDerivedData
 
   let showDialog = false
 
@@ -18,17 +22,17 @@
 
   function add() {
     attack = new Attack()
-    $data.attacks.push(attack)
+    data.attacks.push(attack)
     showDialog = true
   }
 
   function close() {
-    $data = $data
+    data = data
     showDialog = false
   }
 
   function remove() {
-    $data.attacks.splice($data.attacks.indexOf(attack), 1)
+    data.attacks.splice(data.attacks.indexOf(attack), 1)
     close()
   }
 
@@ -70,11 +74,11 @@
 <Container area="atk">
   <div class="grid gap-2 relative" title="Attacks">
     <span>Name</span><span>Atk</span><span>Damage</span><span />
-    {#each $data.attacks as attack, i}
+    {#each data.attacks as attack, i}
       <span>{attack.name}</span>
-      <span>{$derived.attacks[i].attackModifier}</span>
+      <span>{derived.attacks[i].attackModifier}</span>
       <span>
-        {$derived.attacks[i].fullDamageRoll}
+        {derived.attacks[i].fullDamageRoll}
         {attack.damageType}
       </span>
       <span class="material-icons ml-2 text-gray-400 text-sm" on:click={() => edit(attack)}>edit</span>

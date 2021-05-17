@@ -2,8 +2,10 @@
   import Dialog from '../components/Dialog.svelte'
   import TextField from '../components/TextField.svelte'
   import Container from '../components/Container.svelte'
-  import { data, Feature } from './model'
+  import { Feature } from './model'
   import type { DnD5eData } from './model'
+
+  export let data: DnD5eData
 
   let showDialog = false
 
@@ -16,17 +18,17 @@
 
   function add() {
     feature = new Feature()
-    $data.features.push(feature)
+    data.features.push(feature)
     showDialog = true
   }
 
   function close() {
-    $data = $data
+    data = data
     showDialog = false
   }
 
   function remove() {
-    $data.features.splice($data.features.indexOf(feature), 1)
+    data.features.splice(data.features.indexOf(feature), 1)
     close()
   }
 </script>
@@ -45,7 +47,7 @@
 {/if}
 
 <Container class="p-4" title="Features & Traits">
-  {#each $data.features as feature}
+  {#each data.features as feature}
     <label class="mb-4">
       <div class="relative text-lg">
         {feature.name}
