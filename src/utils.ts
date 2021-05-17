@@ -65,3 +65,7 @@ function box(width: number, height: number): string {
 
   return `url('data:image/svg+xml;utf8,<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg"><path d="${path}" fill="none" stroke="${stroke}" stroke-width="${strokeWidth}"/></svg>')`
 }
+
+export function portal(node: HTMLElement, parameters = { target: document.body }) {
+  parameters.target.append(node)
+}

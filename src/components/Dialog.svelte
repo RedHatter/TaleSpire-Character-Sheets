@@ -1,21 +1,22 @@
 <script lang="ts">
-  import { fade, scale } from 'svelte/transition'
-  import { quadOut, quadIn } from 'svelte/easing'
-  import { createEventDispatcher } from 'svelte'
+  import { fly } from 'svelte/transition'
+  import { createEventDispatcher, onMount } from 'svelte'
+  import { portal } from '../utils'
   const dispatch = createEventDispatcher()
+
+  onMount(() => {
+    const main = document.getElementsByTagName('main')[0]
+    main.classList.add('filter', 'blur')
+    return () => main.classList.remove('filter', 'blur')
+  })
 </script>
 
 <div
-  in:fade={{ duration: 200, easing: quadIn }}
-  out:fade={{ duration: 200, easing: quadOut }}
-  class="bg-opacity-50 fixed inset-0 z-50 flex overflow-auto items-center justify-center bg-black"
+  use:portal
+  class="fixed inset-0 z-50 flex overflow-auto items-center justify-center"
   on:click={() => dispatch('close')}
 >
-  <div
-    on:click|stopPropagation
-    in:scale={{ duration: 150, easing: quadIn, delay: 150 }}
-    class="p-4 rounded bg-white shadow"
-  >
+  <div on:click|stopPropagation transition:fly={{ duration: 300, y: -50 }} class="p-4 rounded bg-white shadow">
     <slot />
   </div>
 </div>
