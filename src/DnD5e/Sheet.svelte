@@ -11,7 +11,7 @@
   import Skills from './Skills.svelte'
   import Container from '../components/Container.svelte'
 
-  export let data: DnD5eData = new DnD5eData()
+  export let data: DnD5eData
 
   const setItem = debounce(data => localforage.setItem(data.uid, data), 1000)
 

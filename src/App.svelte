@@ -3,16 +3,11 @@
   import { extendPrototype } from 'localforage-getitems'
   extendPrototype(localforage)
 
-  import DnD5eSheet from './DnD5e/Sheet.svelte'
-  import Drawer from './components/Drawer.svelte'
-
-  let character: number
+  import Main from './Main.svelte'
 </script>
 
 {#await localforage.getItems() then items}
-<main class="flex flex-col my-4 mx-auto container">
-    <DnD5eSheet data={Object.values(items)[character ?? 0]} />
-</main>
+  <Main items={Object.values(items)} />
 {/await}
 
 <style global>
