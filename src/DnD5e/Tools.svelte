@@ -1,7 +1,7 @@
 <script lang="ts">
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
-  import Dialog from '../components/Dialog.svelte'
+  import ConfigDialog from '../components/ConfigDialog.svelte'
   import { AbilityType, CustomSkill, SkillProficiencyType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
@@ -11,35 +11,18 @@
   export let derived: DnD5eDerivedData
 
   let showDialog = false
-  let tool: CustomSkill
 
   const items = enumToSelect(AbilityType)
-
-  function edit(_tool: CustomSkill) {
-    tool = _tool
-    showDialog = true
-  }
-
-  function add() {
-    tool = new CustomSkill()
-    data.tools.push(tool)
-    showDialog = true
-  }
 
   function close() {
     data = data
     showDialog = false
   }
-
-  function remove() {
-    data.tools.splice(data.tools.indexOf(tool), 1)
-    close()
-  }
 </script>
 
 {#if showDialog}
-  <Dialog on:close={close}>
-    <TextField class="mb-2" label="Name" placeholder="Thieves' Tools" bind:value={tool.name} />
+  <ConfigDialog on:close={close} bind:items={data.tools} type={CustomSkill} let:index>
+    <TextField class="mb-2" label="Name" placeholder="Thieves' Tools" bind:value={data.tools[index].name} />
     <div class="gap-2 flex mb-2">
       <Select
         class="flex-1"
@@ -50,20 +33,21 @@
           { value: SkillProficiencyType.Expertise, text: 'Expertise' },
           { value: SkillProficiencyType.JackOfAllTrades, text: 'Jack of All Trades' },
         ]}
-        bind:value={tool.proficient}
+        bind:value={data.tools[index].proficient}
       />
-      <Select class="flex-1" label="Ability" {items} bind:value={tool.ability} />
+      <Select class="flex-1" label="Ability" {items} bind:value={data.tools[index].ability} />
     </div>
-    <TextField class="w-96 h-72" type="textarea" label="Description" bind:value={tool.description} />
-
-    <div class="flex justify-between mt-4 w-full">
-      <button class="py-2 px-4 text-red-400 uppercase font-medium text-sm" on:click={remove}>Remove</button>
-      <button class="text-primary-400 py-2 px-4 uppercase font-medium text-sm" on:click={close}>Done</button>
-    </div>
-  </Dialog>
+    <TextField class="h-72 w-full" type="textarea" label="Description" bind:value={data.tools[index].description} />
+  </ConfigDialog>
 {/if}
 
-<Container class="mb-3 w-full" title="Tool Proficiencies & Custom Skills">
+<Container class="relative mb-3 w-full" title="Tool Proficiencies & Custom Skills">
+  <span
+    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
+    on:click={() => (showDialog = true)}
+  >
+    edit
+  </span>
   <div class="grid gap-2">
     <span>Tool</span><span>Pro</span><span>Ability</span><span />
     {#each data.tools as tool, key}
@@ -71,12 +55,10 @@
         <span>{tool.name}</span>
         <span>{derived.tools[key].modifier}</span>
         <span>{derived.tools[key].ability}</span>
-        <span class="material-icons text-gray-400 text-sm" on:click={() => edit(tool)}>edit</span>
         <input class="hidden" type="checkbox" />
         <div class="col-span-4">{tool.description}</div>
       </label>
     {/each}
-    <button class="col-span-4" on:click={add}>+</button>
   </div>
 </Container>
 

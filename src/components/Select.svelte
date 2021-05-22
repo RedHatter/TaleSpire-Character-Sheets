@@ -7,7 +7,7 @@
   export let items: Array<Option>
   export let label: string
   export let value: any
-  let clazz
+  let clazz = ''
   export { clazz as class }
 </script>
 

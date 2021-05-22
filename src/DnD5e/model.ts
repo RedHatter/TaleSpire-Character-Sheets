@@ -27,7 +27,7 @@ export enum SkillProficiencyType {
 
 export class Attack {
   constructor(
-    public name: string = '',
+    public name: string = 'Unnamed Attack',
     public attackAbility: AbilityType = AbilityType.STR,
     public attackModifier: number = 0,
     public proficient: boolean = true,
@@ -47,7 +47,7 @@ export enum ItemType {
 
 export class Item {
   constructor(
-    public name: string = '',
+    public name: string = 'Unnamed Item',
     public description: string = '',
     public count: number = 1,
     public weight: number = 0,
@@ -58,7 +58,7 @@ export class Item {
 
 export class CustomSkill {
   constructor(
-    public name: string = '',
+    public name: string = 'Unnamed Skill',
     public proficient: SkillProficiencyType = SkillProficiencyType.Proficient,
     public ability: AbilityType = AbilityType.STR,
     public modifier: number = 0,
@@ -82,11 +82,11 @@ export class OtherProficiency {
 }
 
 export class Feature {
-  constructor(public name: string = '', public source: string = '', public description: string = '') {}
+  constructor(public name: string = 'Unnamed Feature', public source: string = '', public description: string = '') {}
 }
 
 export class Tracker {
-  constructor(public name: string = '', public max: number = 0, public current: number = 0) {}
+  constructor(public name: string = 'Unnamed Tracker', public max: number = 0, public current: number = 0) {}
 }
 
 export class DnD5eData {
