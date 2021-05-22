@@ -19,7 +19,8 @@
     cursor: pointer;
   }
 
-  input {
+  input,
+  textarea {
     background-color: transparent;
   }
 
@@ -38,5 +39,26 @@
     cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
+  }
+
+  .dark {
+    background-color: #121212;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dark * {
+    border-color: rgba(255, 255, 255, 0.38);
+  }
+
+  .dark .text-gray-600 {
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  .dark .bg-white {
+    background-color: #121212;
+  }
+
+  .dark .shadow {
+    background-color: #383838;
   }
 </style>

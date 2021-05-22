@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Theme, theme } from '../Settings.svelte'
   import { handDrawn } from '../utils'
 
   let clazz = ''
@@ -12,7 +13,7 @@
 
 {#if label}
   <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label class="{clazz} p-2" {style} use:handDrawn>
+  <label class="{clazz} p-2" {style} class:simple={$theme == Theme.SIMPLE} use:handDrawn={$theme == Theme.FANCY}>
     <slot />
     {#if title !== undefined}
       <div class="my-2 text-center uppercase text-xs">
@@ -23,7 +24,7 @@
     {/if}
   </label>
 {:else}
-  <div class="{clazz} block p-2" {style} use:handDrawn>
+  <div class="{clazz} block p-2" {style} class:simple={$theme == Theme.SIMPLE} use:handDrawn={$theme == Theme.FANCY}>
     <slot />
     {#if title !== undefined}
       <div class="my-2 text-center uppercase text-xs">
@@ -34,3 +35,9 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  .simple {
+    @apply border rounded;
+  }
+</style>

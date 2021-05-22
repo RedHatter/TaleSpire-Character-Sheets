@@ -12,15 +12,16 @@
     }
   }
 
-  onMount(() => {
-    const main = document.getElementsByTagName('main')[0]
-    main.classList.add('filter', 'blur')
-    return () => main.classList.remove('filter', 'blur')
-  })
+  function wrapper(node: Element, opts: any) {
+    document.getElementsByTagName('main')[0].classList.remove('filter', 'blur')
+    return slide(node, opts)
+  }
+
+  onMount(() => document.getElementsByTagName('main')[0].classList.add('filter', 'blur'))
 </script>
 
 <div class="fixed inset-0 z-40" on:click={() => dispatch('close')}>
-  <div transition:slide class="fixed top-0 bottom-0 left-0 p-2 w-64 bg-white shadow" on:click|stopPropagation>
+  <div in:slide out:wrapper class="fixed top-0 bottom-0 left-0 p-2 w-64 bg-white shadow" on:click|stopPropagation>
     <slot />
   </div>
 </div>

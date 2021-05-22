@@ -32,9 +32,18 @@ const resizeObserver = new ResizeObserver(entries => {
   }
 })
 
-export function handDrawn(node: HTMLElement) {
-  resizeObserver.observe(node)
+export function handDrawn(node: HTMLElement, enable: boolean) {
+  if (enable) resizeObserver.observe(node)
   return {
+    update(enable) {
+      if (enable) {
+        resizeObserver.observe(node)
+      } else {
+        resizeObserver.unobserve(node)
+        node.style.backgroundImage = ''
+      }
+    },
+
     destroy() {
       resizeObserver.unobserve(node)
     },
