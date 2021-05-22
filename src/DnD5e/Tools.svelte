@@ -2,6 +2,7 @@
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
   import ConfigDialog from '../components/ConfigDialog.svelte'
+  import Cog from '../components/Cog.svelte'
   import { AbilityType, CustomSkill, SkillProficiencyType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
@@ -42,12 +43,7 @@
 {/if}
 
 <Container class="relative mb-3 w-full" title="Tool Proficiencies & Custom Skills">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   <div class="grid gap-2">
     <span>Tool</span><span>Pro</span><span>Ability</span><span />
     {#each data.tools as tool, key}

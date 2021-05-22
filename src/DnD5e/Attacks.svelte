@@ -3,6 +3,7 @@
   import TextField from '../components/TextField.svelte'
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
+  import Cog from '../components/Cog.svelte'
   import { Attack, AbilityType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
@@ -49,12 +50,7 @@
 {/if}
 
 <Container class="relative" area="atk">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   <div class="grid gap-2" title="Attacks">
     <span>Name</span><span>Atk</span><span>Damage</span><span />
     {#each data.attacks as attack, i}

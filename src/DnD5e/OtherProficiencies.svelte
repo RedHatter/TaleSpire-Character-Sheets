@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { OtherProficiency, OtherProficiencyType } from './model'
-  import type { DnD5eData } from './model'
-  import { enumToSelect } from '../utils'
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
   import Container from '../components/Container.svelte'
+  import Cog from '../components/Cog.svelte'
+  import { OtherProficiency, OtherProficiencyType } from './model'
+  import type { DnD5eData } from './model'
+  import { enumToSelect } from '../utils'
 
   export let data: DnD5eData
 
@@ -30,12 +31,7 @@
 {/if}
 
 <Container class="relative w-full" title="Other Proficiencies">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   <div class="grid grid-cols-2">
     <span>Type</span><span>Proficiency</span>
     {#each data.proficiencies as proficiency}

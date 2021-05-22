@@ -4,6 +4,7 @@
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
   import Container from '../components/Container.svelte'
+  import Cog from '../components/Cog.svelte'
   import { Item, ItemType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
@@ -50,12 +51,7 @@
   </ConfigDialog>
 {/if}
 <Container class="relative" area="inv" title="Equipment">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   <div class="grid grid-cols-5">
     <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
     <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>

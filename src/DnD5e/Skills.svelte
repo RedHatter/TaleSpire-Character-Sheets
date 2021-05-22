@@ -1,7 +1,7 @@
 <script lang="ts">
   import Container from '../components/Container.svelte'
-
   import Dialog from '../components/Dialog.svelte'
+  import Cog from '../components/Cog.svelte'
   import { SkillProficiencyType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
 
@@ -36,11 +36,9 @@
   </Dialog>
 {/if}
 
-<Container class="skills mb-3 pt-6 px-6" title="Skills">
+<Container class="skills relative mb-3 pt-6 px-6" title="Skills">
+  <Cog bind:value={showDialog} />
   <div class="skills grid gap-x-2 items-center">
-    <span class="col-span-3 material-icons text-gray-400 text-right text-sm" on:click={() => (showDialog = true)}>
-      edit
-    </span>
     {#each Object.entries(derived.skills) as [key, value]}
       <span class="material-icons text-right text-sm">
         {data.skills[key] == SkillProficiencyType.Proficient

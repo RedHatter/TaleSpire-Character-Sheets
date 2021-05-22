@@ -47,7 +47,7 @@
   }
 
   .dark * {
-    border-color: rgba(255, 255, 255, 0.38);
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
   .dark .text-gray-600 {

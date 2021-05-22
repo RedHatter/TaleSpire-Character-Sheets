@@ -2,6 +2,7 @@
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import TextField from '../components/TextField.svelte'
   import Container from '../components/Container.svelte'
+  import Cog from '../components/Cog.svelte'
   import { Feature } from './model'
   import type { DnD5eData } from './model'
 
@@ -24,12 +25,7 @@
 {/if}
 
 <Container class="relative p-4" title="Features & Traits">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   {#each data.features as feature}
     <label class="mb-4">
       <div class="text-lg">{feature.name}</div>

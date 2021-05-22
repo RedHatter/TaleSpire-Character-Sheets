@@ -2,6 +2,7 @@
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import TextField from '../components/TextField.svelte'
   import Container from '../components/Container.svelte'
+  import Cog from '../components/Cog.svelte'
   import { Effect, EffectModifier, AbilityType, OtherStats } from './model'
   import type { DnD5eData } from './model'
   import Select from '../components/Select.svelte'
@@ -79,12 +80,7 @@
 {/if}
 
 <Container class="relative mb-3 p-4" title="Active Effects">
-  <span
-    class="material-icons right-2 top-2 absolute text-gray-400 text-sm cursor-pointer"
-    on:click={() => (showDialog = true)}
-  >
-    edit
-  </span>
+  <Cog bind:value={showDialog} />
   {#each data.effects as effect}
     <label class="mb-4">
       <div class="text-lg">{effect.name}</div>
