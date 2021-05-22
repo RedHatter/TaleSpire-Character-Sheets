@@ -1,5 +1,6 @@
 import { mapObject } from '../utils'
 import { nanoid as uid } from 'nanoid'
+import { Parser } from 'expr-eval'
 
 export enum DiceType {
   D4,
@@ -87,6 +88,25 @@ export class Feature {
 
 export class Tracker {
   constructor(public name: string = 'Unnamed Tracker', public max: number = 0, public current: number = 0) {}
+}
+
+export class Effect {
+  constructor(
+    public name: string = 'Unnamed Effect',
+    public source: string = '',
+    public duration: string = '',
+    public description: string = '',
+    public modifiers: Array<EffectModifier> = []
+  ) {}
+}
+
+export class EffectModifier {
+  constructor(public stat: AbilityType | OtherStats = AbilityType.STR, public expr: string = '') {}
+}
+
+export enum OtherStats {
+  AC = 6,
+  SPEED = 7,
 }
 
 export class DnD5eData {
@@ -179,6 +199,8 @@ export class DnD5eData {
 
   trackers: Array<Tracker> = [new Tracker('Class Resource'), new Tracker('Other Resource')]
   features: Array<Feature> = []
+
+  effects: Array<Effect> = []
 }
 
 export interface DnD5eDerivedData {
@@ -186,6 +208,8 @@ export interface DnD5eDerivedData {
   savingThrows: { [key in AbilityType]: { name: string; modifier: number } }
   tools: Array<{ ability: string; modifier: number }>
   skills: { [key: string]: { name: string; modifier: number } }
+  armorClass: number
+  speed: number
   attacks: Array<{ attackModifier: number; fullDamageRoll: string }>
   coin: {
     copper: number
@@ -207,14 +231,47 @@ const abilityNames = {
 }
 
 export function deriveData(data: DnD5eData): DnD5eDerivedData {
-  const abilityScores = mapObject(data.abilityScores, (base: number, type: AbilityType) => ({
-    modifier: Math.floor((base - 10) / 2),
-    name: abilityNames[type],
-  }))
+  const derived = {
+    abilityScores: mapObject(data.abilityScores, (base: number, type: AbilityType) => ({
+      modifier: Math.floor((base - 10) / 2),
+      name: abilityNames[type],
+    })),
+    armorClass: data.armorClass,
+    speed: data.speed,
+  } as Partial<DnD5eDerivedData>
+
+  for (const modifier of data.effects.flatMap(o => o.modifiers))
+    try {
+      // TODO Define modifier order
+      const value = Parser.evaluate(modifier.expr.toUpperCase(), {
+        STR: derived.abilityScores[AbilityType.STR].modifier,
+        DEX: derived.abilityScores[AbilityType.DEX].modifier,
+        CON: derived.abilityScores[AbilityType.CON].modifier,
+        INT: derived.abilityScores[AbilityType.INT].modifier,
+        WIS: derived.abilityScores[AbilityType.WIS].modifier,
+        CHA: derived.abilityScores[AbilityType.CHA].modifier,
+        AC: derived.armorClass,
+        SPEED: derived.speed,
+      })
+
+      switch (modifier.stat) {
+        case OtherStats.AC:
+          derived.armorClass = value
+          break
+        case OtherStats.SPEED:
+          derived.speed = value
+          break
+        default:
+          derived.abilityScores[modifier.stat].modifier = value
+          break
+      }
+    } catch (e) {
+      // TODO display errors to user
+    }
 
   function getSkillModifier(ability: AbilityType, type: SkillProficiencyType) {
     return (
-      abilityScores[ability].modifier +
+      derived.abilityScores[ability].modifier +
       (type == SkillProficiencyType.Proficient
         ? data.proficiency
         : type == SkillProficiencyType.Expertise
@@ -240,10 +297,10 @@ export function deriveData(data: DnD5eData): DnD5eDerivedData {
   copper = copper % 10
 
   return {
-    abilityScores,
+    ...derived,
 
     savingThrows: mapObject(data.savingThrows, (proficient: boolean, type: AbilityType) => ({
-      modifier: abilityScores[type].modifier + (proficient ? data.proficiency : 0),
+      modifier: derived.abilityScores[type].modifier + (proficient ? data.proficiency : 0),
       name: abilityNames[type],
     })),
 
@@ -329,10 +386,12 @@ export function deriveData(data: DnD5eData): DnD5eDerivedData {
 
     attacks: data.attacks.map(attack => ({
       attackModifier:
-        abilityScores[attack.attackAbility].modifier +
+        derived.abilityScores[attack.attackAbility].modifier +
         attack.attackModifier +
         (attack.proficient ? data.proficiency : 0),
-      fullDamageRoll: `${attack.damageRoll}+${abilityScores[attack.damageAbility].modifier + attack.damageModifier}`,
+      fullDamageRoll: `${attack.damageRoll}+${
+        derived.abilityScores[attack.damageAbility].modifier + attack.damageModifier
+      }`,
     })),
 
     coin: {

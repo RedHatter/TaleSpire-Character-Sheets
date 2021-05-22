@@ -19,7 +19,7 @@
   <ConfigDialog on:close={close} bind:items={data.features} type={Feature} let:index>
     <TextField label="Name" bind:value={data.features[index].name} />
     <TextField label="Source" bind:value={data.features[index].source} />
-    <TextField label="Description" type="textarea" class="h-72 w-full" bind:value={data.features[index].description} />
+    <TextField label="Description" type="textarea" class="h-72 w-96" bind:value={data.features[index].description} />
   </ConfigDialog>
 {/if}
 

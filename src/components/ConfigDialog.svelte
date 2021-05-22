@@ -6,6 +6,9 @@
   export let items: Array<any>
   export let type: new () => any
 
+  let clazz = ''
+  export { clazz as class }
+
   let selected = items.length > 0 ? 0 : -1
 
   function add() {
@@ -36,7 +39,7 @@
       <li class="py-2 px-4 hover:bg-blue-100 text-center cursor-pointer" on:click={add}>+</li>
     </ul>
     {#if selected > -1}
-      <div class="w-96">
+      <div class={clazz}>
         <slot index={selected} />
       </div>
     {:else}

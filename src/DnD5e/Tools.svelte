@@ -37,7 +37,7 @@
       />
       <Select class="flex-1" label="Ability" {items} bind:value={data.tools[index].ability} />
     </div>
-    <TextField class="h-72 w-full" type="textarea" label="Description" bind:value={data.tools[index].description} />
+    <TextField class="h-72 w-96" type="textarea" label="Description" bind:value={data.tools[index].description} />
   </ConfigDialog>
 {/if}
 

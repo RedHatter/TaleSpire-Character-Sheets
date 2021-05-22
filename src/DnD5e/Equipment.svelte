@@ -46,7 +46,7 @@
         bind:value={data.equipment[index].isEquipped}
       />
     </div>
-    <TextField class="h-72 w-full" label="description" type="textarea" bind:value={data.equipment[index].description} />
+    <TextField class="h-72 w-96" label="description" type="textarea" bind:value={data.equipment[index].description} />
   </ConfigDialog>
 {/if}
 <Container class="relative" area="inv" title="Equipment">

@@ -10,6 +10,7 @@
   import OtherProficiencies from './OtherProficiencies.svelte'
   import Skills from './Skills.svelte'
   import Container from '../components/Container.svelte'
+  import Effects from './Effects.svelte'
 
   export let data: DnD5eData
 
@@ -111,14 +112,16 @@
     <OtherProficiencies bind:data />
   </div>
   <div class="second">
-    <Container area="ac" title="Armor Class" label>
-      <input class="w-full text-center text-5xl" type="number" bind:value={data.armorClass} />
+    <Container class="py-2 text-center" area="ac" title="Armor Class" label>
+      <div class="w-full text-5xl">{derived.armorClass}</div>
+      <!-- <input class="w-full text-center text-5xl" type="number" bind:value={data.armorClass} /> -->
     </Container>
     <Container class="py-2 text-center" area="in" title="Initiative">
       <div class="w-full text-5xl">{derived.abilityScores[AbilityType.DEX].modifier}</div>
     </Container>
-    <Container area="speed" title="Speed" label>
-      <input class="w-full text-center text-5xl" type="number" bind:value={data.speed} />
+    <Container class="py-2 text-center" area="speed" title="Speed" label>
+      <div class="w-full text-5xl">{derived.speed}</div>
+      <!-- <input class="w-full text-center text-5xl" type="number" bind:value={data.speed} /> -->
     </Container>
 
     <Container class="flex flex-col w-full text-center" area="hp">
@@ -183,7 +186,8 @@
     <Equipment bind:data {derived} />
   </div>
   <div>
-    <Container class="mb-3" title="Personality Traits">
+    <Effects bind:data />
+    <!-- <Container class="mb-3" title="Personality Traits">
       <textarea class="w-full" bind:value={data.traits} />
     </Container>
     <Container class="mb-3" title="Ideals">
@@ -194,7 +198,7 @@
     </Container>
     <Container class="mb-3" title="Flaws">
       <textarea class="w-full" bind:value={data.flaws} />
-    </Container>
+    </Container> -->
     <Trackers bind:data />
     <Features bind:data />
   </div>
