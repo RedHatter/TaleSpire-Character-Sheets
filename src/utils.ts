@@ -29,6 +29,7 @@ const resizeObserver = new ResizeObserver(entries => {
   for (const entry of entries) {
     const node = entry.target as HTMLElement
     node.style.backgroundImage = box(node.clientWidth, node.clientHeight)
+    node.style.backgroundRepeat = 'no-repeat'
   }
 })
 
@@ -51,7 +52,7 @@ export function handDrawn(node: HTMLElement, enable: boolean) {
 }
 
 function box(width: number, height: number): string {
-  const stroke = '%23D1D5DB'
+  const stroke = '%23444'
   const strokeWidth = 1
 
   const r1 = () => Math.random() * 10 + 20

@@ -6,7 +6,7 @@
   import { AbilityType, CustomSkill, SkillProficiencyType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
 
   export let data: DnD5eData
   export let derived: DnD5eDerivedData
@@ -42,32 +42,32 @@
   </ConfigDialog>
 {/if}
 
-<Container class="relative mb-3 w-full" title="Tool Proficiencies & Custom Skills">
+<Paper class="relative mb-4 w-full" title="Tool Proficiencies & Custom Skills">
   <Cog bind:value={showDialog} />
-  <div class="grid gap-2">
-    <span>Tool</span><span>Pro</span><span>Ability</span><span />
+  <div class="table">
+    <span class="header">Tool</span><span class="header">Pro</span><span class="header">Ability</span><span />
     {#each data.tools as tool, key}
       <label class="contents">
         <span>{tool.name}</span>
         <span>{derived.tools[key].modifier}</span>
         <span>{derived.tools[key].ability}</span>
         <input class="hidden" type="checkbox" />
-        <div class="col-span-4">{tool.description}</div>
+        <p class="col-span-4">{tool.description}</p>
       </label>
     {/each}
   </div>
-</Container>
+</Paper>
 
 <style>
-  .grid {
+  .table {
     grid-template-columns: 1fr auto 1fr auto;
   }
 
-  input[type='checkbox']:checked + div {
+  input[type='checkbox']:checked + p {
     display: block;
   }
 
-  input[type='checkbox'] + div {
+  input[type='checkbox'] + p {
     display: none;
   }
 </style>

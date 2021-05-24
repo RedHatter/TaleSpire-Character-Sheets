@@ -7,7 +7,7 @@
   import { Attack, AbilityType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
   import { enumToSelect } from '../utils'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
 
   export let data: DnD5eData
   export let derived: DnD5eDerivedData
@@ -49,10 +49,10 @@
   </ConfigDialog>
 {/if}
 
-<Container class="relative" area="atk">
+<Paper class="relative" area="atk" title="Attacks">
   <Cog bind:value={showDialog} />
-  <div class="grid gap-2" title="Attacks">
-    <span>Name</span><span>Atk</span><span>Damage</span><span />
+  <div class="table">
+    <span class="header">Name</span><span class="header">Atk</span><span class="header">Damage</span>
     {#each data.attacks as attack, i}
       <span>{attack.name}</span>
       <span>{derived.attacks[i].attackModifier}</span>
@@ -62,10 +62,10 @@
       </span>
     {/each}
   </div>
-</Container>
+</Paper>
 
 <style>
-  .grid {
-    grid-template-columns: 1fr auto 1fr auto;
+  .table {
+    grid-template-columns: 1fr auto 1fr;
   }
 </style>

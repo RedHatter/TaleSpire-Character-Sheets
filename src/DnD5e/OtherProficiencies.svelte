@@ -2,7 +2,7 @@
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import Select from '../components/Select.svelte'
   import TextField from '../components/TextField.svelte'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
   import Cog from '../components/Cog.svelte'
   import { OtherProficiency, OtherProficiencyType } from './model'
   import type { DnD5eData } from './model'
@@ -30,13 +30,19 @@
   </ConfigDialog>
 {/if}
 
-<Container class="relative w-full" title="Other Proficiencies">
+<Paper class="relative w-full" title="Other Proficiencies">
   <Cog bind:value={showDialog} />
-  <div class="grid grid-cols-2">
-    <span>Type</span><span>Proficiency</span>
+  <div class="table">
+    <span class="header">Type</span><span class="header">Proficiency</span>
     {#each data.proficiencies as proficiency}
       <span>{OtherProficiencyType[proficiency.type]}</span>
       <span>{proficiency.name}</span>
     {/each}
   </div>
-</Container>
+</Paper>
+
+<style>
+  .table {
+    grid-template-columns: auto auto;
+  }
+</style>

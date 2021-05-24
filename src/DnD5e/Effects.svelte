@@ -1,12 +1,13 @@
 <script lang="ts">
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import TextField from '../components/TextField.svelte'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
   import Cog from '../components/Cog.svelte'
   import { Effect, EffectModifier, AbilityType, OtherStats } from './model'
   import type { DnD5eData } from './model'
   import Select from '../components/Select.svelte'
   import { enumToSelect } from '../utils'
+  import Accordion from '../components/Accordion.svelte'
 
   export let data: DnD5eData
 
@@ -79,28 +80,9 @@
   </ConfigDialog>
 {/if}
 
-<Container class="relative mb-3 p-4" title="Active Effects">
+<Paper class="relative mb-4 p-4" title="Active Effects">
   <Cog bind:value={showDialog} />
   {#each data.effects as effect}
-    <label class="mb-4">
-      <div class="text-lg">{effect.name}</div>
-      <div class="text-sm">
-        {effect.source}
-        {#if effect.duration !== ''}({effect.duration}){/if}
-      </div>
-      <input type="checkbox" />
-      <p class="whitespace-pre-wrap">{effect.description}</p>
-    </label>
+    <Accordion title={effect.name} subtitle="{effect.source} ({effect.duration})" content={effect.description} />
   {/each}
-</Container>
-
-<style>
-  input[type='checkbox'],
-  input[type='checkbox'] + p {
-    display: none;
-  }
-
-  input[type='checkbox']:checked + p {
-    display: block;
-  }
-</style>
+</Paper>

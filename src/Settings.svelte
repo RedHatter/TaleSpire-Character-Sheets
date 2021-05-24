@@ -2,11 +2,12 @@
   import { writable } from 'svelte/store'
 
   export enum Theme {
+    MATERIAL = 'material',
     SIMPLE = 'simple',
     FANCY = 'fancy',
   }
 
-  export const theme = writable(Theme.SIMPLE)
+  export const theme = writable(Theme.MATERIAL)
 </script>
 
 <script lang="ts">
@@ -22,6 +23,7 @@
   <Select
     label="Theme"
     items={[
+      { text: 'Material', value: Theme.MATERIAL },
       { text: 'Simple', value: Theme.SIMPLE },
       { text: 'Fancy', value: Theme.FANCY },
     ]}

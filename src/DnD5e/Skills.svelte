@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
   import Dialog from '../components/Dialog.svelte'
   import Cog from '../components/Cog.svelte'
   import { SkillProficiencyType } from './model'
@@ -36,9 +36,9 @@
   </Dialog>
 {/if}
 
-<Container class="skills relative mb-3 pt-6 px-6" title="Skills">
+<Paper class="skills relative mb-4 pt-6 px-6" title="Skills">
   <Cog bind:value={showDialog} />
-  <div class="skills grid gap-x-2 items-center">
+  <div class="skills grid gap-x-4 gap-y-1">
     {#each Object.entries(derived.skills) as [key, value]}
       <span class="material-icons text-right text-sm">
         {data.skills[key] == SkillProficiencyType.Proficient
@@ -49,11 +49,11 @@
           ? 'indeterminate_check_box'
           : 'check_box_outline_blank'}
       </span>
-      <span>{value.modifier}</span>
+      <span class="justify-self-end">{value.modifier}</span>
       <span>{value.name}</span>
     {/each}
   </div>
-</Container>
+</Paper>
 
 <style>
   .dialog {

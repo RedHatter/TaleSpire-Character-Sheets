@@ -1,7 +1,8 @@
 <script lang="ts">
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import TextField from '../components/TextField.svelte'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
+  import Accordion from '../components/Accordion.svelte'
   import Cog from '../components/Cog.svelte'
   import { Feature } from './model'
   import type { DnD5eData } from './model'
@@ -24,25 +25,9 @@
   </ConfigDialog>
 {/if}
 
-<Container class="relative p-4" title="Features & Traits">
+<Paper class="relative p-4" title="Features & Traits">
   <Cog bind:value={showDialog} />
   {#each data.features as feature}
-    <label class="mb-4">
-      <div class="text-lg">{feature.name}</div>
-      <div class="text-sm">{feature.source}</div>
-      <input type="checkbox" />
-      <p class="whitespace-pre-wrap">{feature.description}</p>
-    </label>
+    <Accordion title={feature.name} subtitle={feature.source} content={feature.description} />
   {/each}
-</Container>
-
-<style>
-  input[type='checkbox'],
-  input[type='checkbox'] + p {
-    display: none;
-  }
-
-  input[type='checkbox']:checked + p {
-    display: block;
-  }
-</style>
+</Paper>

@@ -3,7 +3,7 @@
   import TextField from '../components/TextField.svelte'
   import Select from '../components/Select.svelte'
   import Checkbox from '../components/Checkbox.svelte'
-  import Container from '../components/Container.svelte'
+  import Paper from '../components/Paper.svelte'
   import Cog from '../components/Cog.svelte'
   import { Item, ItemType } from './model'
   import type { DnD5eData, DnD5eDerivedData } from './model'
@@ -50,17 +50,33 @@
     <TextField class="h-72 w-96" label="description" type="textarea" bind:value={data.equipment[index].description} />
   </ConfigDialog>
 {/if}
-<Container class="relative" area="inv" title="Equipment">
+<Paper class="relative" area="inv" title="Equipment">
   <Cog bind:value={showDialog} />
-  <div class="grid grid-cols-5">
-    <label>CP <input class="w-full" type="number" bind:value={copper} on:blur={resetCoin} /></label>
-    <label>SP <input class="w-full" type="number" bind:value={silver} on:blur={resetCoin} /></label>
-    <label>EP <input class="w-full" type="number" bind:value={electrum} on:blur={resetCoin} /></label>
-    <label>GP <input class="w-full" type="number" bind:value={gold} on:blur={resetCoin} /></label>
-    <label>PP <input class="w-full" type="number" bind:value={platinum} on:blur={resetCoin} /></label>
+  <div class="grid grid-cols-6 justify-items-center mb-4">
+    <img src="assets/coins.png" alt="Pile of coins" class="w-6" />
+    <label>
+      <span class="text-xs">CP</span>
+      <input class="w-8" type="number" bind:value={copper} on:blur={resetCoin} />
+    </label>
+    <label>
+      <span class="text-xs">SP</span>
+      <input class="w-8" type="number" bind:value={silver} on:blur={resetCoin} />
+    </label>
+    <label>
+      <span class="text-xs">EP</span>
+      <input class="w-8" type="number" bind:value={electrum} on:blur={resetCoin} />
+    </label>
+    <label>
+      <span class="text-xs">GP</span> <input class="w-8" type="number" bind:value={gold} on:blur={resetCoin} />
+    </label>
+    <label>
+      <span class="text-xs">PP</span>
+      <input class="w-8" type="number" bind:value={platinum} on:blur={resetCoin} />
+    </label>
   </div>
-  <div class="grid gap-2 items">
-    <span>Count</span><span>Name</span><span>Weight</span><span />
+
+  <div class="table mb-4">
+    <span class="header">Count</span><span class="header">Name</span><span class="header">Weight</span>
     {#each data.equipment.filter(o => o.type === ItemType.Equipment) as item}
       <label class:unequiped={!item.isEquipped} class="contents">
         <span>{item.count}</span>
@@ -69,7 +85,7 @@
           {item.weight}
         </span>
         <input class="hidden" type="checkbox" />
-        <span class="col-span-3">{item.description}</span>
+        <p class="col-span-3 mb-4 text-sm">{item.description}</p>
       </label>
     {/each}
     {#each data.equipment.filter(o => o.type === ItemType.Item) as item}
@@ -80,7 +96,7 @@
           {item.weight}
         </span>
         <input class="hidden" type="checkbox" />
-        <span class="col-span-3">{item.description}</span>
+        <p class="col-span-3 mb-4 text-sm">{item.description}</p>
       </label>
     {/each}
   </div>
@@ -88,22 +104,22 @@
     <div>Total Weight</div>
     <div class="text-2xl">{derived.totalWeight}</div>
   </div>
-</Container>
+</Paper>
 
 <style>
-  .items {
-    grid-template-columns: auto 1fr auto auto;
+  .table {
+    grid-template-columns: auto 1fr auto;
   }
 
   .unequiped span {
     opacity: 0.5;
   }
 
-  input[type='checkbox'] + span {
+  input[type='checkbox'] + p {
     display: none;
   }
 
-  input[type='checkbox']:checked + span {
+  input[type='checkbox']:checked + p {
     display: block;
   }
 </style>
