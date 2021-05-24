@@ -8,9 +8,11 @@
   import Select from '../components/Select.svelte'
   import { enumToSelect } from '../utils'
   import Accordion from '../components/Accordion.svelte'
+  import Title from '../components/Title.svelte'
 
   export let data: DnD5eData
 
+  let expanded: Effect = undefined
   let showDialog = false
 
   function close() {
@@ -80,9 +82,18 @@
   </ConfigDialog>
 {/if}
 
-<Paper class="relative mb-4 p-4" title="Active Effects">
+<div class="relative mb-4">
   <Cog bind:value={showDialog} />
+  <div class="accordion pt-6 px-6 pb-2 rounded-t">
+    <Title value="Active Effects" />
+  </div>
   {#each data.effects as effect}
-    <Accordion title={effect.name} subtitle="{effect.source} ({effect.duration})" content={effect.description} />
+    <Accordion
+      title={effect.name}
+      subtitle="{effect.source} ({effect.duration})"
+      content={effect.description}
+      expanded={expanded === effect}
+      on:click={() => (expanded = expanded === effect ? undefined : effect)}
+    />
   {/each}
-</Paper>
+</div>

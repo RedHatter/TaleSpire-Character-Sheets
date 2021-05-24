@@ -62,13 +62,21 @@
 
   .material,
   .simple {
-    background-color: #f5f5f5;
     letter-spacing: 0.01071em;
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   }
 
+  .material {
+    background-color: #f5f5f5;
+  }
+
   .material .paper {
     @apply elevation-1 rounded;
+    background-color: white;
+  }
+
+  .material .accordion {
+    @apply elevation-1;
     background-color: white;
   }
 
@@ -78,6 +86,10 @@
 
   .simple .paper {
     @apply border rounded;
+  }
+
+  .simple .accordion {
+    @apply border;
   }
 
   .fancy {

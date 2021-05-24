@@ -1,7 +1,7 @@
 <script lang="ts">
   import ConfigDialog from '../components/ConfigDialog.svelte'
   import TextField from '../components/TextField.svelte'
-  import Paper from '../components/Paper.svelte'
+  import Title from '../components/Title.svelte'
   import Accordion from '../components/Accordion.svelte'
   import Cog from '../components/Cog.svelte'
   import { Feature } from './model'
@@ -15,6 +15,8 @@
     data = data
     showDialog = false
   }
+
+  let expanded: Feature = undefined
 </script>
 
 {#if showDialog}
@@ -25,9 +27,18 @@
   </ConfigDialog>
 {/if}
 
-<Paper class="relative p-4" title="Features & Traits">
+<div class="relative">
   <Cog bind:value={showDialog} />
+  <div class="accordion pt-6 px-6 pb-2 rounded-t">
+    <Title value="Features & Traits" />
+  </div>
   {#each data.features as feature}
-    <Accordion title={feature.name} subtitle={feature.source} content={feature.description} />
+    <Accordion
+      title={feature.name}
+      subtitle={feature.source}
+      content={feature.description}
+      expanded={expanded === feature}
+      on:click={() => (expanded = expanded === feature ? undefined : feature)}
+    />
   {/each}
-</Paper>
+</div>
